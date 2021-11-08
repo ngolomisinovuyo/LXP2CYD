@@ -1,0 +1,286 @@
+﻿@model LPX2YCDProject2020.Models.Account.StudentProgramViewModel
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+
+@{
+    ViewData["Title"] = "Programs";
+    Layout = "~/Views/Shared/_userDashboard.cshtml";
+    int i = 0;
+}
+
+@if (ViewBag.error != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.error
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+}
+
+@if (ViewBag.isSuccess == true)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Operation completed sucessfully..
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<!-- courses section -->
+
+
+<div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+    <h3 class="title-main">All<span>programmes</span></h3>
+</div>
+<div class="row">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Programme name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Start date
+                </th>
+                <th>
+                    End date
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model.programmes)
+            {
+                @if (c.StartDate >= DateTime.Now || c.EndDate > DateTime.Now || c.StartDate < DateTime.Now && c.EndDate > DateTime.Now)
+                {
+                    <tr>
+                        <td>@c.ProgrammeName</td>
+                        <td>@c.Description</td>
+                        <td>@c.StartDate.ToShortDateString()</td>
+                        <td>@c.EndDate.ToShortDateString()</td>
+                        <td>
+                            @foreach (var d in Model.eventRsvps)
+                            {
+                                if (d.ProgramId == c.Id)
+                                {
+                                    <span>Enrolled<i class="fa fa-thumbs-up ml-2" aria-hidden="true"></i></span>
+                                    i = i + 1;
+                                    //break;
+                                }
+                                @*else
+                                    {
+                                        <a asp-controller="Admin" asp-action="Enroll" asp-route-Id="@c.Id" asp-route-UserId="@User.FindFirst("studGroup").Value" class="btn btn-style btn-style-primary">Enroll</a>
+                                    }*@
+                            }
+                            @if (i == 0)
+                            {
+                                <form asp-controller="Admin" asp-action="Enroll" asp-route-UserId="@User.FindFirst("studGroup").Value">
+                                    <input hidden name="Id" value="@c.Id" />
+                                    <input hidden name="UserId" value="@User.FindFirst("studGroup").Value" />
+                                    <input type="submit" class="btn btn-style btn-style-primary" value="Enroll" />
+                                </form>
+                                @*<a asp-controller="Admin" asp-action="Enroll" asp-route-Id="@c.Id" asp-route-UserId="@User.FindFirst("studGroup").Value" class="btn btn-style btn-style-primary">Enroll</a>*@
+                                i = 0;
+                            }
+                        </td>
+                    </tr>
+                    i = 0;
+                }
+            }
+
+        </tbody>
+    </table>
+
+
+
+</div>
+
+
+@*<div class="row">
+        @foreach (var c in Model.programmes)
+        {
+            @if (c.StartDate >= DateTime.Now || c.EndDate > DateTime.Now || c.StartDate < DateTime.Now && c.EndDate > DateTime.Now)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-card-single">
+                        <div class="grids5-info position-relative">
+                            <img src="~/Images/courseThumbnail.png" alt="" class="img-fluid" />
+                            <div class="meta-list">
+                                <a asp-controller="Admin" asp-action="Courses">@c.EventCategory</a>
+                            </div>
+                            <div class="course-price-item">
+                                <h6>@c?.Duration</h6>
+                            </div>
+                        </div>
+                        <div class="content-main-top">
+                            <div class="content-top mb-4 mt-3">
+                                <ul class="list-unstyled d-flex align-items-center justify-content-between">
+                                    <li> <i class="fa fa-calendar" aria-hidden="true"></i> @c.StartDate.ToShortDateString() - @c.EndDate.ToShortDateString()</li>
+                                    <li> <i class="fa fa-clock-o" aria-hidden="true"></i>@c.StartTime.ToShortTimeString()</li>
+                                </ul>
+                            </div>
+                            <h4><a href="courses.html">@c.ProgrammeName</a></h4>
+                            <p>@c.Description</p>
+                            <div class="top-content-border d-flex align-items-center justify-content-between mt-5 pt-4">
+                                <ul class="rating-list">
+                                    <li>
+
+                                    </li>
+                                </ul>
+
+                                @foreach (var b in Model.eventRsvps)
+                                {
+                                    @if (c.Id == b.ProgramId)
+                                    {
+                                        i++;
+                                        break;
+                                    }
+                                    break;
+                                }
+
+                                @if (i == 0)
+                                {
+                                    <form asp-controller="Admin" asp-action="Enroll" asp-route-UserId="@User.FindFirst("studGroup").Value">
+                                        <input hidden name="Id" value="@c.Id" />
+                                        <input hidden name="UserId" value="@User.FindFirst("studGroup").Value" />
+                                        <input type="submit"class="btn btn-style btn-style-primary" value="Enroll" />
+                                    </form>
+                                    <a asp-controller="Admin" asp-action="Enroll" asp-route-Id="@c.Id" asp-route-UserId="@User.FindFirst("studGroup").Value" class="btn btn-style btn-style-primary">Enroll</a>
+                                }
+                                else if (i == 1)
+                                {
+                                    <span>Enrolled<i class="fa fa-thumbs-up ml-2" aria-hidden="true"></i></span>
+                                }
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>*@
+
+
+<div class="w3l-grids-block-5 w3l-grids-block-6 py-5">
+    <div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+        <h3 class="title-main">Enrolled <span>Programmes</span></h3>
+    </div>
+    <div class="row">
+        @if (Model.eventRsvps.Count() == 0)
+        {
+            <P class="text-danger text-bold">
+                You have no enrollments, select any of the above programs above.
+            </P>
+        }
+        else
+        {
+            @foreach (var c in Model.programmes)
+            {
+                if (c.EndDate > DateTime.Today.Date)
+                {
+                    foreach (var a in Model.eventRsvps)
+                    {
+                        if (a.ProgramId == c.Id)
+                        {
+                            <div class="col-md-4 col-md-6">
+                                <div class="blog-card-single shadow p-3 mb-5 bg-body rounded">
+                                    <div class="grids5-info position-relative">
+                                        <img src="~/Images/courseThumbnail.png" alt="" class="img-fluid" />
+                                        <div class="meta-list">
+                                            <a asp-controller="Admin" asp-action="Courses">@c?.EventCategory</a>
+                                        </div>
+                                        <div class="course-price-item">
+                                            <h6>@c?.Duration</h6>
+                                        </div>
+                                    </div>
+                                    <div class="content-main-top">
+                                        <div class="content-top mb-4 mt-3">
+                                            <ul class="list-unstyled d-flex align-items-center justify-content-between">
+                                                <li> <i class="fa fa-calendar" aria-hidden="true"></i> @c.StartDate.ToShortDateString() - @c.EndDate.ToShortDateString()</li>
+                                                <li> <i class="fa fa-clock-o" aria-hidden="true"></i>@c?.StartTime.ToShortTimeString()</li>
+                                            </ul>
+                                        </div>
+                                        <h4><a href="courses.html">@c?.ProgrammeName</a></h4>
+                                        <p>@c?.Description</p>
+                                        <div class="top-content-border d-flex align-items-center justify-content-between mt-5 pt-4">
+                                            <ul class="rating-list">
+
+                                                <li>
+                                                    <a href="@c?.Link" target="_blank">Join online</a>
+                                                </li>
+                                            </ul>
+                                            <a class="btn btn-style btn-style-primary" asp-action="Deregister" asp-controller="Admin" asp-route-Id="@a.ReservationId" onclick=" return confirm('Are you sure you want to cancel your registration ?')">
+                                                De register<i class="fas fa-user-minus" ml-2" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+
+            }
+        }
+    </div>
+</div>
+
+
+<div class="w3l-grids-block-5 w3l-grids-block-6 py-5">
+    <div class="container py-md-5 py-4">
+        <div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+            <h3 class="title-main">Completed <span>programmes</span></h3>
+        </div>
+        <div class="col">
+            @foreach (var a in Model.eventRsvps)
+            {
+                @foreach (var v in Model.programmes)
+                {
+                    if (v.EndDate < DateTime.Now)
+                    {
+                        if (v.Id == a.ProgramId && a.attended == true)
+                        {
+                            <div class="col-lg-4 col-md-6">
+                                <div class="blog-card-single">
+                                    <div class="grids5-info position-relative">
+                                        <img src="~/Images/courseThumbnail.png" alt="" class="img-fluid" />
+                                        <div class="meta-list">
+                                            <a asp-controller="Admin" asp-action="Courses">@v.EventCategory</a>
+                                        </div>
+                                        <div class="course-price-item">
+                                            <h6>@v.Duration</h6>
+                                        </div>
+                                    </div>
+                                    <div class="content-main-top">
+                                        <div class="content-top mb-4 mt-3">
+                                            <ul class="list-unstyled d-flex align-items-center justify-content-between">
+                                                <li> <i class="fa fa-calendar" aria-hidden="true"></i>  @v.StartDate.ToShortDateString() - @v.EndDate.ToShortDateString()</li>
+                                                <li> <i class="fa fa-clock-o" aria-hidden="true"></i>@v.StartTime.ToShortTimeString()</li>
+                                            </ul>
+                                        </div>
+                                        <h4><a href="courses.html">@v.ProgrammeName</a></h4>
+                                        <p>@v.Description</p>
+                                        <div class="top-content-border d-flex  justify-content-between mt-5 pt-4">
+                                            <h6 class="text-muted">Feedback</h6>
+                                            <br />
+                                            <a asp-controller="Admin" asp-action="PostFeedback" asp-route-id="@v.Id" class="btn btn-sm btn-secondary">Options</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+                }
+            }
+        </div>
+    </div>
+</div>

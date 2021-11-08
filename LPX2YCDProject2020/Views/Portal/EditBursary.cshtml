@@ -1,0 +1,60 @@
+﻿@model LPX2YCDProject2020.Models.PortalModels.Bursary
+
+@{
+    ViewData["Title"] = "EditBursary";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+}
+
+<h1>EditBursary</h1>
+
+<h4>Bursary</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditBursary">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input hidden asp-for="Active" />
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="openingDate" class="control-label"></label>
+                <input asp-for="openingDate" class="form-control" />
+                <span asp-validation-for="openingDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClosingDate" class="control-label"></label>
+                <input asp-for="ClosingDate" class="form-control" />
+                <span asp-validation-for="ClosingDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RequiredDocuments" class="control-label"></label>
+                <input asp-for="RequiredDocuments" class="form-control" />
+                <span asp-validation-for="RequiredDocuments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Url" class="control-label"></label>
+                <input asp-for="Url" class="form-control" />
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MinimumRequirements" class="control-label"></label>
+                <textarea asp-for="MinimumRequirements" class="form-control" placeholder="Enter reqirements">
+
+                </textarea>
+                <span asp-validation-for="MinimumRequirements" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="ListBursaries">Back to List</a>
+</div>
+

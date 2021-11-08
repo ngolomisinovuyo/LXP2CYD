@@ -1,0 +1,93 @@
+﻿@model LPX2YCDProject2020.Models.Appointments.UserAppointments
+
+@{
+    ViewData["Title"] = "Appointment";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+}
+
+<h1>GetAppointment</h1>
+
+<h4>UserAppointments</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="UpdateAppointment">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <label asp-for="assignedEmployee" class="control-label"></label>
+                <select asp-for="assignedEmployee" value="@Model?.assignedEmployee" class="form-control" asp-items=" ViewBag.Employees"></select>
+                <span asp-validation-for="assignedEmployee" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="userId" class="control-label"></label>
+                <input asp-for="userId" class="form-control" />
+                <span asp-validation-for="userId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Time" class="control-label"></label>
+                <input asp-for="Time" class="form-control" />
+                <span asp-validation-for="Time" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Message" class="control-label"></label>
+                <textarea asp-for="Message" class="form-control"></textarea>
+                <span asp-validation-for="Message" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CenterNotes" class="control-label"></label>
+                <textarea asp-for="CenterNotes" placeholder="Enter a message for the user." class="form-control" ></textarea>
+                <span asp-validation-for="CenterNotes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" value="@Model?.Status" class="form-control">
+                    <option value="Approved">Approved</option>
+                    <option value="Declined">Declined</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AppointmentTypeId" class="control-label"></label>
+                <select asp-for="AppointmentTypeId" value="@Model.AppointmentTypeId" class="form-control" asp-items="ViewBag.AppointmentTypes"></select>
+                <span asp-validation-for="AppointmentTypeId" class="text-danger"></span>
+            </div>
+            @*<div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Saved" /> @Html.DisplayNameFor(model => model.Saved)
+                </label>
+            </div>*@
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Arrived" /> @Html.DisplayNameFor(model => model.Arrived)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

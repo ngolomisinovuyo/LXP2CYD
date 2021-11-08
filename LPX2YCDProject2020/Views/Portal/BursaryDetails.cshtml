@@ -1,0 +1,74 @@
+﻿@model LPX2YCDProject2020.Models.PortalModels.Bursary
+
+@{
+    ViewData["Title"] = "Bursary";
+    Layout = "~/Views/Shared/_userDashboard.cshtml";
+}
+
+<div class="container-fluid h-100">
+    <div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+        <h3 class="title-main"> <span>Bursaries</span></h3>
+        <hr />
+    </div>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-3">
+            <i class="fa fa-calendar"></i> @Html.DisplayNameFor(model => model.openingDate)
+        </dt>
+        <dd class="col-sm-9">
+           @Model.openingDate.ToShortDateString()
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(c => c.RequiredSubjects)
+        </dt>
+        <dd class="col-sm-9">
+            @foreach (var d in Model.RequiredSubjects)
+            {
+                @d.SubjectDetails.SubjectName <span> &nbsp; </span> @d.Percentage<span>%</span><br /> 
+            }
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.SponsoredFields)
+        </dt>
+        <dd class="col-sm-9">
+            @foreach (var v in Model.SponsoredFields)
+            {
+                @v.Course.CourseName<br />
+            }
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.RequiredDocuments)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.RequiredDocuments)
+        </dd>
+        <dt class="col-sm-3">
+            <i class="fab fa-internet-explorer"></i> @Html.DisplayNameFor(model => model.Url)
+        </dt>
+        <dd class="col-sm-9">
+            <a href="@Html.DisplayFor(model => model.Url)" target="_blank"> @Html.DisplayFor(model => model.Url) </a>
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.MinimumRequirements)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.MinimumRequirements)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.ClosingDate)
+        </dt>
+        <dd class="col-sm-3">
+          @Model.ClosingDate.ToShortDateString()
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="ShowAllBursaries" class="btn btn-sm btn-primary">Back to List</a>
+</div>

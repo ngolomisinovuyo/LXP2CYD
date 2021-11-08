@@ -1,0 +1,112 @@
+﻿@model IEnumerable<LPX2YCDProject2020.Models.PortalModels.Bursary>
+
+@{
+    ViewData["Title"] = "List Bursaries";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+}
+
+<h1>ListBursaries</h1>
+<hr />
+
+@if (ViewBag.IsSuccess == true)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Operation successfully completed!</strong> <br />
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<p>
+    <a asp-action="AddBursaries">Add new bursary</a>
+</p>
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<table class="table table-active">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.openingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClosingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequiredSubjects)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Url)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MinimumRequirements)
+            </th>
+            <th>
+                Fields Covered
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.openingDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClosingDate)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.RequiredSubjects)*@
+                    <br />
+                    <h5>Subjects</h5>
+                    @if (item.RequiredSubjects == null)
+                    {
+                        <a asp-action="AddBursarySubject" asp-controller="Portal">Add fields</a>
+                    }
+                    else
+                    {
+                        @foreach (var v in item.RequiredSubjects)
+                        {
+                            @v?.SubjectDetails.SubjectName @v?.Percentage <br />
+                        }
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Url)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MinimumRequirements)
+                </td>
+                <td>
+                    @if (item.SponsoredFields == null)
+                    {
+                        <a asp-action="" asp-controller="">Add fields</a>
+                    }
+                    else
+                    {
+                        @foreach (var a in item.SponsoredFields)
+                        {
+                            @a?.Course.CourseName <br />
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-action="EditBursary" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="BursaryDetailsAdminView" asp-route-id="@item.Id">Details</a> |
+                    <form asp-action="DeleteBursary" asp-controller="Portal">
+                        <input name="Id" value="@item.Id" hidden />
+                        <input value="Delete" class="link-danger" type="submit" />
+                    </form>
+                    @*<a asp-action="DeleteBursary" asp-route-id="@item.Id">Delete</a>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

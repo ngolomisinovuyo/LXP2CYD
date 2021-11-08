@@ -1,0 +1,40 @@
+﻿@model LPX2YCDProject2020.Models.AddressModels.CascadingAddressClass
+
+@{
+    ViewData["Title"] = "Suburb";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+
+}
+
+<div class="container">
+    <h3>Add suburb to @Model.City.CityName</h3>
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="AddSuburb">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="@Model.City.CityId" hidden />
+
+                <div class="form-group">
+                    <label asp-for="@Model.Suburb.SuburbName" class="control-label"></label>
+                    <input asp-for="@Model.Suburb.SuburbName" class="form-control" />
+                    <span asp-validation-for="@Model.Suburb.SuburbName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.Suburb.PostalCode" class="control-label"></label>
+                    <input asp-for="@Model.Suburb.PostalCode" class="form-control" />
+                    <span asp-validation-for="@Model.Suburb.PostalCode" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="GetSuburbsByCity" asp-route-cityId="@Model.City.CityId">Show all suburbs in @Model.City.CityName</a>
+    </div>
+</div>

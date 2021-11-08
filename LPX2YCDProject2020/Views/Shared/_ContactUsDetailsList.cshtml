@@ -1,0 +1,54 @@
+﻿@model IEnumerable<LPX2YCDProject2020.Models.HomeModels.CenterDetails>
+
+@foreach (var a in Model)
+{
+    <div class="col-md-5 contact-left">
+        <h3 class="font-weight-bold mb-md-5 mb-4">Get in touch with us</h3>
+        <div class="cont-details">
+            <div class="d-flex contact-grid">
+                <div class="cont-left text-center mr-3">
+                    <span class="fa fa-globe"></span>
+                </div>
+                <div class="cont-right">
+                    <h6>Our Address</h6>
+                    <p>@a.AddressLine1, @a.AddressLine2, 
+                    @a.Suburb.SuburbName, @a.Suburb.City.CityName,
+                    @a.Suburb.City.Province.ProvinceName, @a.Suburb.PostalCode,
+                    @a.Suburb.City.Province.Country</p>
+                </div>
+            </div>
+            <div class="d-flex contact-grid mt-4 pt-lg-2">
+                <div class="cont-left text-center mr-3">
+                    <span class="fa fa-phone"></span>
+                </div>
+                <div class="cont-right">
+                    <h6>Call Us</h6>
+                    <p><a>@a.ContactNumber</a></p>
+                </div>
+            </div>
+            <div class="d-flex contact-grid mt-4 pt-lg-2">
+                <div class="cont-left text-center mr-3">
+                    <span class="fa fa-envelope-open"></span>
+                </div>
+                <div class="cont-right">
+                    <h6>Email Us</h6>
+                    <p><a href="mailto:@a.EmailAddress" class="mail">@a.EmailAddress</a></p>
+                </div>
+            </div>
+            <div class="d-flex contact-grid mt-4 pt-lg-2">
+                <div class="cont-left text-center mr-3">
+                    <span class="fa fa-headphones"></span>
+                </div>
+                <div class="cont-right">
+                    <h6>Customer Support</h6>
+                    <p><a href="mailto:@a.EmailAddress" class="mail">@a.EmailAddress</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7 mt-md-0 mt-4">
+        <div class="map-iframe">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3307.670754860209!2d25.669297815079652!3d-34.00098973336284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e6532ceb52c38f9%3A0xc4589f8b1c092372!2sNelson%20Mandela%20University!5e0!3m2!1sen!2sza!4v1633566103278!5m2!1sen!2sza" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+}

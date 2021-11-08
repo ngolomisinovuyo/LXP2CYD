@@ -1,0 +1,11 @@
+﻿@model LPX2YCDProject2020.Models.AddressModels.Suburb
+
+<option value="">--Select suburb--</option>
+
+@if (ViewBag.suburbList != null)
+{
+    foreach (var a in ViewBag.suburbList)
+    {
+        <option value="@a.Value">@a.Text</option>
+    }
+}

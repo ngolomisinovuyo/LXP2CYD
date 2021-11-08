@@ -1,0 +1,193 @@
+﻿
+@{
+    ViewData["Title"] = "Update profile";
+    Layout = "~/Views/Shared/_userDashboard.cshtml";
+}
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+@model StudentProfileViewModel
+
+<div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+    <h3 class="title-main">My <span>Profile</span></h3>
+</div>
+
+
+@if (Model.LearnerProfiles.Count() == 0 && Model.EnrolledSubjects.Count() == 0)
+{
+    <div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+        Welcome @User.FindFirst("UserFirstName").Value.<br />
+        We are happy you choose to Kickstart your carrer with us, and hope you learn a lot and get all the tools you need for the future..
+        <br /> But first, Please take a few moments to <a asp-action="UpdateProfileDetails" asp-controller="Account"><bold>Update Profile</bold></a> so we can get to know you.<br />
+        Goodluck <i class="fas fa-smile-wink"></i>
+    </div>
+}
+else
+{
+    <div class="accordion" id="accordionExample">
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Personal Details
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+
+                    @foreach (var photo in Model?.LearnerProfiles)
+                    {
+                        <div class="py-4 px-3 mb-4 bg-light">
+
+                            <div style="margin:auto; width:60%;" class="text-center">
+
+                                <div class="media d-flex align-items-center " style="margin:auto; width:60%;">
+                                    <img src="@photo.ImageUrl" alt="Profile photo" class="img-thumbnail img-circle shadow-sm" height="500" width="500" />
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="m-0">@User.FindFirst("UserFirstName").Value @User.FindFirst("UserLastName").Value</h4>
+                                    <p class=" font-weight-normal text-muted mb-0"> @User.FindFirst("EmailAddr").Value</p>
+
+                                    @foreach (var a in Model?.LearnerProfiles)
+                                    {
+                                        <p class=" font-weight-normal text-muted mb-0">Gender:.@a?.Gender </p>
+                                        <p class=" font-weight-normal text-muted mb-0">Identity number: @a.IDNumber</p>
+                                        <p class=" font-weight-normal text-muted mb-0">Date of birth: @a.DateOfBirth</p>
+                                        <p class=" font-weight-normal text-muted mb-0"> Cell number: @a.ContactNumber</p>
+                                        <hr />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item border border-primary">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Address
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+
+                    <div style="margin:auto; width:60%;" class="text-center">
+                        @foreach (var r in Model?.LearnerProfiles)
+                        {
+                            <div class="cont-left text-center mr-3">
+                                <span class="fa fa-globe"></span>
+                            </div>
+                            @Html.DisplayFor(item => r.AddressLine1)
+                            <br />
+
+                            @Html.DisplayFor(item => r.AddressLine2)
+                            <br />
+
+                            @Html.DisplayFor(item => r.suburb.SuburbName)
+                            <br />
+
+                            @Html.DisplayFor(item => r.suburb.City.CityName)
+                            <br />
+
+                            @Html.DisplayFor(item => r.suburb.City.Province.ProvinceName)
+                            <br />
+
+                            @Html.DisplayFor(item => r.suburb.PostalCode)
+                            <br />
+
+                            @Html.DisplayFor(item => r.suburb.City.Province.Country)
+                            <hr />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingThree">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    School results
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+                    @foreach (var v in Model?.LearnerProfiles)
+                    {
+                        <div class=" form-group">
+                            <p>
+                                School:&nbsp; @Html.DisplayFor(i => v.NameOfSchool)
+                            </p>
+
+                        </div>
+                        <div class="form-group">
+                            <p>
+                                Grade:&nbsp; @Html.DisplayFor(i => v.Grade)
+                            </p>
+                        </div>
+                    }
+
+                    <table class="table table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Subject name</th>
+                                <th>Year</th>
+                                <th>Term 1 mark</th>
+                                <th>Term 2 mark</th>
+                                <th>Term 3 mark</th>
+                                <th>Term 4 goal</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tfoot>
+                            <tr>
+                                <td colspan="2"><bold>APS Score</bold></td>
+                                <td>@Model.T1Aps</td>
+                                <td>@Model.T2Aps</td>
+                                <td>@Model.T3Aps</td>
+                                <td>@Model.T4Aps</td>
+                                <td colspan="2"></td>
+                            </tr>
+
+                        </tfoot>
+
+                        <tbody>
+
+                            @foreach (var c in Model?.EnrolledSubjects)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(v => c.Subjects.SubjectName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(v => c.Year)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(v => c.FirstTermMark)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(v => c.SecondTermMark)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(v => c.ThirdTermMark)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(v => c.Target)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(z => c.Comments)
+                                    </td>
+                                </tr>
+                            }
+
+                            <p><i class="fa fa-plus"></i><a asp-action="SchoolReport" asp-controller="Account"><bold>Add New</bold></a></p>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

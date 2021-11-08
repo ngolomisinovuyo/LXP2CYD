@@ -1,0 +1,180 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_userDashboard.cshtml";
+}
+
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+@model StudentProfileViewModel
+
+<div class="container py-md-5 py-4 justify-content-center">
+    <div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+        <h3 class="title-main">Add<span>Subjects</span></h3>
+    </div>
+    <form asp-action="AddStudentSubjects">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+        <input hidden="hidden" asp-for="@Model.Subjects.UserId" value="@User.FindFirst("studGroup").Value">
+        <div class="table">
+            <div class="row">
+
+                <div class="col-sm-2">
+                    Subject
+                </div>
+
+                <div class="col-sm-1">
+                    Year
+                </div>
+
+                <div class="col-sm-1">
+                    Term 1
+                </div>
+
+                <div class="col-sm-1">
+                    Term 2
+                </div>
+
+                <div class="col-sm-1">
+                    Term 3
+                </div>
+
+                <div class="col-sm-1">
+                    Term 4 target
+                </div>
+                <div class="col-sm-5">
+                    Tell us more
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    @if (ViewBag.SubjectList != null)
+                    {
+                        <select id="SubjectId" asp-for="@Model.Subjects.SubjectId" class="form-control" asp-items="@ViewBag.SubjectList">
+                            <option>--Select subject--</option>
+                        </select>
+
+                    }
+                    <span asp-validation-for="@Model.Subjects.SubjectId" class="text-danger"></span>
+                </div>
+
+                <div class="col-sm-1">
+                    <input value="@DateTime.Now.Year.ToString()" asp-for="@Model.Subjects.Year" id="Year" class="form-control" disabled="disabled" />
+                </div>
+
+                <div class="col-sm-1">
+                    <input asp-for="@Model.Subjects.FirstTermMark" id="FirstTermMark" value="0" class="form-control" />
+                    <span asp-validation-for="@Model.Subjects.FirstTermMark" class="text-danger" hidden="hidden"></span>
+                </div>
+
+                <div class="col-sm-1">
+                    <input asp-for="@Model.Subjects.SecondTermMark" value="0" id="SecondTermMark" class="form-control" />
+                    <span asp-validation-for="@Model.Subjects.SecondTermMark" class="text-danger" hidden="hidden"></span>
+                </div>
+
+                <div class="col-sm-1">
+                    <input asp-for="@Model.Subjects.ThirdTermMark" value="0" id="ThirdTermMark" class="form-control" />
+                    <span asp-validation-for="@Model.Subjects.SecondTermMark" class="text-danger" hidden="hidden"></span>
+                </div>
+
+                <div class="col-sm-1">
+                    <input asp-for="@Model.Subjects.Target" value="0" id="Target" class="form-control" />
+                    <span asp-validation-for="@Model.Subjects.SecondTermMark" class="text-danger" hidden="hidden"></span>
+                </div>
+
+                <div class="col-sm-3">
+                    <textarea asp-for="@Model.Subjects.Comments" cols="2" rows="2" class="form-control" id="Comments" placeholder="We want to hear from you"></textarea>
+                </div>
+                <div class=" col-sm-2">
+                    <input type="submit" id="SendToDb" value="Add" class="btn btn-sm btn-primary" />
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <table class="table table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>Subject name</th>
+                <th>Year</th>
+                <th>Term 1 mark</th>
+                <th>Term 2 mark</th>
+                <th>Term 3 mark</th>
+                <th>Term 4 goal</th>
+                <th>Comments</th>
+                <th>Actions</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tfoot>
+            <tr>
+                <td colspan="2"><bold>APS Score</bold></td>
+                <td>@Model.T1Aps</td>
+                <td>@Model.T2Aps</td>
+                <td>@Model.T3Aps</td>
+                <td>@Model.T4Aps</td>
+                <td colspan="2"></td>
+            </tr>
+
+        </tfoot>
+
+        <tbody>
+            @if (Model.EnrolledSubjects != null)
+            {
+                @foreach (var c in Model?.EnrolledSubjects)
+                {
+                    <tr>
+                        <td class="col">
+                            @Html.DisplayFor(v => c.Subjects.SubjectName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(v => c.Year)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(v => c.FirstTermMark)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(v => c.SecondTermMark)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(v => c.ThirdTermMark)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(v => c.Target)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(z => c.Comments)
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" asp-action="EditStudentSubjects" asp-route-id="@c.Id">Edit</a>
+                            <a class="btn btn-sm btn-danger" asp-action="DeleteEnrolment" asp-route-id="@c.Id" onclick="return confirm('Are you sure you want to delete this record?')">Delete</a>
+                            <input asp-for="@Model.Subjects.Subjects.Id" name="Id" hidden="hidden" />
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <br />
+
+    <div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+        <h3 class="title-main">How <span> APS </span>is calculated</h3>
+    </div>
+
+    <p class="text-info">
+      <h4><i class=" fa fa-info"></i>What is an APS score?</h4>
+        APS stands for Admission Points Score. In South African universities, APS is one of the tools used to verify if an applicant qualifies for a programme offered at that particular university.<br />
+
+        To calculate your APS, We add your six best subjects, excluding Life Orientation. The points you get depend on the percentage you scored in that particular subject.<br />
+        The APS score is the total points you receive from each course.
+    </p>
+    <br />
+    <div>
+        <img src="~/Images/matric.jpg" />
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/site.js"></script>
+<script src="~/bootstrap/dist/js/bootstrap.min.js"></script>
+

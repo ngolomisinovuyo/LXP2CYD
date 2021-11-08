@@ -1,0 +1,179 @@
+﻿
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+    <environment include="Development">
+        <link href="~/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <link href="~/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/lib/private.css" rel="stylesheet" />
+        <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+        <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css' />
+        <link href="//fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <link href="~/css/style-starter.css" rel="stylesheet" />
+        <link href="~/css/style.css" rel="stylesheet" />
+        <link href="~/css/site.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous"
+              asp-fallback-href="C:\Users\Athist\.nuget\packages\bootstrap\5.0.1\contentFiles\any\any\wwwroot\css\bootstrap.min.css"
+              asp-fallback-test-class="sr-only"
+              asp-fallback-test-property="position"
+              asp-fallback-test-value="absolute" />
+        <link href="~/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+        <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css' />
+        <link href="//fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <link href="~/css/style-starter.css" rel="stylesheet" />
+        <link href="~/css/style.css" rel="stylesheet" />
+        <link href="~/css/site.min.css" rel="stylesheet" />
+    </environment>
+
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+</head>
+<body>
+    <div class="page-container">
+        <!--/content-inner-->
+        <div class="left-content">
+            <div class="inner-content">
+                <!-- header-starts -->
+                <div class="header-section">
+                    <!-- top_bg -->
+                    <div class="top_bg">
+
+                        <div class="header_top">
+                            <div class="top_right">
+                                <ul style="margin-top:2px;">
+                                    <li>
+                                        <a asp-controller="Account" asp-action="ViewProfile"><img src="/Images/courseThumbnail.png" class="img-responsive" alt="" style="height:80px;"> </a>
+                                    </li>
+                                    <li><a asp-controller="Home" asp-action="Home">Home</a></li>|
+                                    <li><a asp-controller="Home" asp-action="ContactUs">Contact us</a></li>|
+                                    <li><a asp-controller="Home" asp-action="Programmes">Programmes</a></li>
+                                </ul>
+                            </div>
+                            <div class="top_left">
+                                <partial name="_loginInfo" />
+                            </div>
+
+                            <div class="clearfix"> </div>
+                        </div>
+
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- /top_bg -->
+                </div>
+               
+                <!--content-->
+                <div class="content">
+                    <div class="monthly-grid">
+                        <div class="panel panel-widget">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+                <!--content-->
+            </div>
+        </div>
+        <!--//content-inner-->
+        <!--/sidebar-menu-->
+        <div class="sidebar-menu">
+            <header class="logo1">
+                <a href="#" class="sidebar-icon"> <span class="fa fa-bars"></span>Menu </a>
+            </header>
+            <div style="border-top:1px ridge rgba(255, 255, 255, 0.15)"></div>
+            <div class="menu">
+                <ul id="menu">
+                    <li><a asp-controller="Account" asp-action="ViewProfile"><i class="fa fa-home"></i> <span>Home</span></a></li>
+                    <li id="menu-academico">
+                        <a href="#"><i class="fa fa-lock"></i> <span> Security</span> <span class="fa fa-angle-right" style="float: right"></span></a>
+                        <ul id="menu-academico-sub">
+                            <li id="menu-academico-avaliacoes"><a asp-controller="Account" asp-action="ChangePassword">Change pasword </a></li>
+                            <li id="menu-academico-boletim"><a asp-controller="Account" asp-action="UserForgotPassword">Forgot password</a></li>
+                        </ul>
+                    </li>
+                    <li id="menu-academico"><a asp-controller="Account" asp-action="UpdateProfileDetails"><i class="fa fa-user"></i> <span>Update profile</span></a></li>
+                    <li><a asp-controller="Account" asp-action="SchoolReport"><i class="fa fa-pencil"></i> <span>Academic profile</span></a></li>
+                    <li id="menu-academico"><a asp-controller="Appointment" asp-action="ViewAppointments"><i class="fa fa-file-text-o"></i> <span>Appointments</span></a></li>
+                    <li id="menu-academico"><a asp-controller="Admin" asp-action="ViewPrograms"><i class="fas fa-tasks"></i> <span>Programmes</span></a></li>
+                    <li><a asp-action="ShowAllBursaries" asp-controller="Portal"><i class="fas fa-award"></i> <span>Bursaries portal</span></a></li>
+                    <li><a asp-action="ListAllMaterial"  asp-controller="Portal"><i class="fas fa-file-alt"></i> <span>Study material</span></a></li>
+                    @*<li id="menu-academico">
+                        <a href="#"><i class="lnr lnr-layers"></i> <span>Tabs & Calender</span> <span class="fa fa-angle-right" style="float: right"></span></a>
+                        <ul id="menu-academico-sub">
+                            <li id="menu-academico-avaliacoes"><a href="tabs.html">Tabs</a></li>
+                            <li id="menu-academico-boletim"><a href="calender.html">Calender</a></li>
+
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="lnr lnr-chart-bars"></i> <span>Forms</span> <span class="fa fa-angle-right" style="float: right"></span></a>
+                        <ul>
+                            <li><a href="input.html"> Input</a></li>
+                            <li><a href="validation.html">Validation</a></li>
+                        </ul>
+                    </li>*@
+                    <li id="menu-academico"><a asp-controller="Account" asp-action="Logout"><i class="fa fa-sign-out"></i> <span>Logout</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <script>
+        var toggle = true;
+
+        $(".sidebar-icon").click(function () {
+            if (toggle) {
+                $(".page-container").addClass("sidebar-collapsed").removeClass("sidebar-collapsed-back");
+                $("#menu span").css({ "position": "absolute" });
+            }
+            else {
+                $(".page-container").removeClass("sidebar-collapsed").addClass("sidebar-collapsed-back");
+                setTimeout(function () {
+                    $("#menu span").css({ "position": "relative" });
+                }, 400);
+            }
+            toggle = !toggle;
+        });
+    </script>
+
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.js"></script>
+        <script src="~/lib/js/bootstrap.min.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.min.js"></script>
+    </environment>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    
+    <!--js -->
+    <script src="js/jquery.nicescroll.js"></script>
+    <script src="js/scripts.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- /Bootstrap Core JavaScript -->
+    <!-- real-time -->
+    <script language="javascript" type="text/javascript" src="js/jquery.flot.js"></script>
+
+    <script src="js/menu_jquery.js"></script>
+    @RenderSection("scripts", required: false);
+</body>
+</html>

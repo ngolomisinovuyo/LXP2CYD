@@ -1,0 +1,70 @@
+﻿@model LPX2YCDProject2020.Models.ContactUsFormModel
+
+<div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+    <h3 class="title-main">We are here to answer all your <span>Questions</span></h3>
+</div>
+<div class="row contact-block align-items-center">
+    <div class="col-md-5 contact-left">
+        <img src="~/Images/OIP.jpg" alt="" class="img-fluid img-responsive"/>
+    </div>
+    <div class="col-md-7 contact-right mt-md-0 mt-4 pl-lg-4">
+        <form asp-controller="Home" asp-action="SendEnquiry" method="post" class="signin-form">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="input-grids">
+                <input type="text" asp-for="FirstName" placeholder="Your Name*"
+                       class="contact-input" required="" />
+                <input type="text" asp-for="LastName" placeholder="Your Surname*"
+                       class="contact-input" required="" />
+                <input type="email" asp-for="EmailAddress" placeholder="Your Email*"
+                       class="contact-input" required="" />
+                <select asp-for="PatronType"class="form-control">
+                    <option value="">--Please Select--</option>
+                    <option value="Prospective sponsor">Future sponsor</option>
+                    <option value="Learner">Learner</option>
+                    <option value="Other">Other</option>
+                </select>
+                <br />
+            </div>
+            <div class="form-input">
+                <textarea asp-for="Message" placeholder="Type your message here*"></textarea>
+            </div>
+            <input type="submit" value="Send Message" class="btn btn-style btn-style-secondary mt-sm-3" />
+        </form>
+    </div>
+</div>
+
+@*<form asp-controller="Home" asp-action="SendEnquiry">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="FirstName"></label>
+        <input asp-for="FirstName" class="form-control" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastName"></label>
+        <input asp-for="LastName" class="form-control" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="EmailAddress"></label>
+        <input asp-for="EmailAddress" class="form-control" />
+        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PatronType"></label>
+        <select asp-for="PatronType" class="form-control">
+            <option>Future sponsor</option>
+            <option>Learner</option>
+            <option>Other</option>
+        </select>
+        <span asp-validation-for="PatronType" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Message"></label>
+        <textarea asp-for="Message " rows="4" cols="1" class="form-control"></textarea>
+    </div>
+    <input type="submit" value="Submit" class="btn btn-primary" />
+</form>*@

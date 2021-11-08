@@ -1,0 +1,38 @@
+﻿@model LPX2YCDProject2020.Models.AddressModels.Province
+
+@{
+    ViewData["Title"] = "Province";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+}
+
+<div class="container">
+
+    <h1>Edit province</h1>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="EditProvince">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ProvinceId" />
+                <div class="form-group">
+                    <label asp-for="ProvinceName" class="control-label"></label>
+                    <input asp-for="ProvinceName" class="form-control" />
+                    <span asp-validation-for="ProvinceName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Country"  class="control-label"></label>
+                    <input asp-for="Country" disabled value="'South Africa'" class="form-control" />
+                    <span asp-validation-for="Country" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="ViewProvinces" class="link-primary">Back to provinces</a>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+﻿@model IEnumerable<string>
+@{
+    ViewData["Title"] = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="errorPage">
+    <div style="margin-top:200px; height:100%">
+        <h1 class="alert-heading text-lg-center text-danger">Error!</h1>
+        <p class="text-center text-gray">
+            Esh! The page you are looking for is currently under unavailable, please bear with us while we fix this issue.<br />
+            If this issue persists, please don't hesitate to <a asp-controller="Home" asp-action="ContactUs">contact us</a>.
+        </p>
+      <div class=" text-danger">
+          @Model?.ToString();
+      </div>
+
+    </div>
+</div>

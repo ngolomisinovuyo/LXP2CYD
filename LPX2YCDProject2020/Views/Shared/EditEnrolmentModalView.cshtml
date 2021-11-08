@@ -1,0 +1,65 @@
+﻿@model StudentSubjects
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+
+<div class="modal fade" id="editEnrolment">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Update subject</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>x</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="EditStudentSubjects" asp-controller="Account">
+
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <input value="@DateTime.Now.Year.ToString()" asp-for="@Model.Year" id="Year" class="form-control" hidden="hidden" />
+                    <input hidden="hidden" asp-for="@Model.UserId" value="@User.FindFirst("studGroup").Value">
+                    <input asp-for="@Model.Subjects.Id" hidden="hidden" />
+                    <div class="row">
+                        <div class="col-sm-2">
+                            @if (ViewBag.SubjectList != null)
+                            {
+                                <select id="SubjectId" asp-for="@Model.Subjects" class="form-control" asp-items="@ViewBag.SubjectList">
+                                    <option>--Select subject--</option>
+                                </select>
+                            }
+                        </div>
+
+                        <div class="col-sm-1">
+                        </div>
+
+                        <div class="col-sm-1">
+                            <input asp-for="@Model.FirstTermMark." id="FirstTermMark" class="form-control" />
+                        </div>
+
+                        <div class="col-sm-1">
+                            <input asp-for="@Model.SecondTermMark" id="SecondTermMark" class="form-control" />
+                        </div>
+
+                        <div class="col-sm-1">
+                            <input asp-for="@Model.ThirdTermMark" id="ThirdTermMark" class="form-control" />
+                        </div>
+
+                        <div class="col-sm-1">
+                            <input asp-for="@Model.Target" id="Target" class="form-control" />
+                        </div>
+
+                        <div class="col-sm-5">
+                            <textarea asp-for="@Model.Comments" cols="2" rows="2" class="form-control" id="Comments" placeholder="We want to hear from you"></textarea>
+                        </div>
+                    </div>
+
+                    <input type="submit" id="SendToDb" value="Add" class="btn btn-primary" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/site.js"></script>
+<script src="~/bootstrap/dist/js/bootstrap.min.js"></script>
+
+

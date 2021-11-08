@@ -1,0 +1,97 @@
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Administration</title>
+    <link href="~/css/Sheet.css" rel="stylesheet" />
+    <link href="~/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <h5>System</h5>
+                <li><a asp-action="AddAboutInfo" asp-controller="Admin"><i class="fas fa-cogs"></i>System details</a></li>
+                <li><a asp-controller="Admin" asp-action="ViewProvinces"><i class="fas fa-map-pin"></i>Locus settings</a></li>
+
+                <h5>Education</h5>
+                <li><a asp-action="ListBursaries" asp-controller="Portal">Bursaries</a></li>
+                <li><a asp-action="MaterialDisplay" asp-controller="Portal"><i class="fas fa-folder-open"></i>Learning material</a></li>
+
+                <h5>General</h5>
+                <li><a asp-controller="Admin" asp-action="ListAllPrograms"><i class="fas fa-list"></i>Programmes</a>
+
+            </ul>
+
+        </div>
+        <div class="main_content">
+            <div class="header">
+                <div></div>
+                <div>
+                    @if (_signInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                <h6 class="h6">Hello @(User.FindFirst("UserFirstName").Value) </h6>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="Account" asp-action="ViewProfile">Dashboard</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <a class="dropdown-item" asp-action="Logout" asp-controller="Account">
+                                        Logout
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="btn btn-outline-primary" asp-action="Login" asp-controller="Account" asp-route-returnUrl="@Context.Request.Path">
+                                Login
+                                <span><i class="bi bi-box-arrow-in-right"></i></span>
+                            </a>
+                            <a class="btn btn-primary" asp-action="SignUp" asp-controller="Account">Register</a>
+                        </li>
+                    }
+
+
+                </div>
+            </div>
+
+            <div class="info">
+                <div>
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="~/lib/jquery-validate/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.js"></script>
+        <script src="~/lib/js/bootstrap.min.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.min.js"></script>
+    </environment>
+
+    @RenderSection("scripts", required: false);
+</body>
+</html>

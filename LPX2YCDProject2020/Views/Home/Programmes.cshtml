@@ -1,0 +1,63 @@
+﻿@model IEnumerable<LPX2YCDProject2020.Models.AdminModels.Programme>
+@{
+    ViewData["Title"] = "AboutUs";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<!-- inner banner -->
+<div class="inner-banner">
+    <div class="w3l-breadcrumb">
+        <div class="container">
+            <h4 class="inner-text-title font-weight-bold text-white mb-sm-3 mb-2">Programmes</h4>
+            <ul class="breadcrumbs-custom-path">
+                <li><a asp-action="Home" asp-controller="Home">Home</a></li>
+                <li class="active">
+                    <span class="fa fa-chevron-right mx-2" aria-hidden="true"></span>Programmes
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- //inner banner -->
+<!-- courses section -->
+<div class="w3l-grids-block-5 w3l-grids-block-6 py-5">
+    <div class="container py-md-5 py-4">
+        <div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+            <h3 class="title-main">Our <span>Programmes</span></h3>
+        </div>
+        <div class="row">
+
+            @foreach (var c in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+                    <div class="blog-card-single">
+                        <div class="grids5-info position-relative">
+                            <img src="~/Images/courseThumbnail.png" alt="" class="img-fluid" />
+                            <div class="meta-list">
+                                <a asp-controller="Admin" asp-action="Courses">@c.EventCategory</a>
+                            </div>
+                            <div class="course-price-item">
+                                <h6>@c?.Duration</h6>
+                            </div>
+                        </div>
+                        <div class="content-main-top">
+                            <div class="content-top mb-4 mt-3">
+                                <ul class="list-unstyled d-flex align-items-center justify-content-between">
+                                    <li> <i class="fa fa-calendar" aria-hidden="true"></i> @c.StartDate.ToShortDateString()</li>
+                                    <li> <i class="fa fa-clock-o" aria-hidden="true"></i>@c.StartTime.ToShortTimeString()</li>
+                                </ul>
+                            </div>
+                            <h4><a href="courses.html">@c.ProgrammeName</a></h4>
+                            <p>@c.Description</p>
+                            <div class="top-content-border d-flex align-items-center justify-content-between mt-5 pt-4">
+                                Venue: @c?.Venue
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

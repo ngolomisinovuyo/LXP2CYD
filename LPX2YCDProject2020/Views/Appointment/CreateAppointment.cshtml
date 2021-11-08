@@ -1,0 +1,97 @@
+﻿@model LPX2YCDProject2020.Models.Appointments.UserAppointments
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+
+@{
+    ViewData["Title"] = "Create Appointment";
+    Layout = "~/Views/Shared/_userDashboard.cshtml";
+    string name = @User.FindFirst("UserFirstName").Value + " " + @User.FindFirst("UserLastName").Value;
+}
+
+
+<div class="container-fluid h-100">
+    <div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+        <h3 class="title-main">Create <span>Appointment</span></h3>
+    </div>
+
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-md-4">
+            <form asp-action="SaveAppointment">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input hidden asp-for="userId" value="@User.FindFirst("studGroup").Value" />
+              
+                <div class="form-group">
+                    <label asp-for="FullName" class="control-label"></label>
+                    <input asp-for="FullName" value="@name" disabled class="form-control" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" value="@User.FindFirst("EmailAddr").Value" disabled class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Date" class="control-label"></label>
+                    <input asp-for="Date" class="form-control" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Time" class="control-label"></label>
+                    <input asp-for="Time" onchange="CheckTime(this)" class="form-control" />
+                    <span asp-validation-for="Time" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Message" class="control-label"></label>
+                    <textarea rows="2" asp-for="Message" class="form-control"></textarea>
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="AppointmentTypeId" class="control-label"></label>
+                    <select asp-for="AppointmentTypeId" class="form-control" asp-items="ViewBag.AppointmentTypes"></select>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="ViewAppointments" class="btn btn-secondary">View all appointmets</a>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Disables previous dates
+            var todaysDate = new Date();
+
+            var month = todaysDate.getMonth() + 1;
+            var day = todaysDate.getDate() + 1;
+            var year = todaysDate.getFullYear();
+
+            if (month < 10)
+                month = '0' + month.toString();
+            if (day < 10)
+                day = '0' + day.toString();
+
+            var maxDate = year + '-' + month + '-' + day;
+            $('#Date').attr('min', maxDate);
+            //End
+
+        });
+        function CheckTime() {
+            var time = document.getElementById("Time").value;
+            if (time < "08:00" || time > "16:00") {
+                alert("Outside operating hours, please select time between 08:00 and 16:00");
+                $("Time").attr("min", '08:15');
+                document.getElementById("Time").innerHTML = '08:15';
+            }
+        }
+
+
+    </script>
+}

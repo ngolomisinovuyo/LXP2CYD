@@ -1,0 +1,113 @@
+﻿@*@model IEnumerable<LPX2YCDProject2020.Models.PortalModels.SubjectResources>*@
+@model LPX2YCDProject2020.Models.PortalModels.MaterialListViewModel
+@{
+    ViewData["Title"] = "ListAllMaterial";
+    Layout = "~/Views/Shared/_userDashboard.cshtml";
+}
+
+
+<div class="w3l-grids-block-5 w3l-grids-block-6 py-5">
+    <div class="container py-md-5 py-4">
+        <div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+            <h3 class="title-main">Study <span>Resources</span></h3>
+        </div>
+
+        <div class="row">
+            @if (Model.Subjects.Count() == 0 && Model.Material.Count() == 0)
+            {
+                <p class="text-danger">No available resources at the moment</p>
+            }
+            else
+            {
+
+                @foreach (var c in Model.Subjects)
+                {
+                    <h3>@c.SubjectName</h3>
+
+                    @foreach (var book in Model.Material)
+                    {
+                        @if (c.Id == book.SubjectsId)
+                        {
+
+
+                            <div class="col-md-4">
+                                <div class="card mb-4 shadow-sm">
+                                    <img src="~/StudyResources/materialThumbnail.jpg" class="img-thumbnail" />
+                                    <div class="card-body">
+                                        <h3 class="card-title">@(string.IsNullOrEmpty(book.Title) ? "Name is not available" : book.Title)</h3>
+                                        <p class="card-text">@(string.IsNullOrEmpty(book.Description) ? "Description is not availabe": book.Description)</p>
+                                        <p class="card-text">Subject: @(string.IsNullOrEmpty(book.Subject.SubjectName) ? "Subject is not availabe": book.Subject.SubjectName)</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="btn-group">
+                                                <a href="@book.PdfUrl" target="_blank" class="btn btn-sm btn-outline-secondary">Open</a>
+                                            </div>
+                                            <small class="text-muted">Resource type: @(string.IsNullOrEmpty(book.Type) ? "NA" : book.Type)</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                      }
+                 }
+
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div class="w3l-grids-block-5 w3l-grids-block-6 py-5">
+        <div class="container py-md-5 py-4">
+            <div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+                <h3 class="title-main">Study <span>Resources</span></h3>
+            </div>
+
+            <div class="row">
+                @if (Model.Count() == 0)
+                {
+                    <p class="text-danger">No available resources at the moment</p>
+                }
+                else
+                {
+
+                    @foreach (var book in Model)
+                    {
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="~/StudyResources/materialThumbnail.jpg" class="img-thumbnail" />
+                                <div class="card-body">
+                                    <h3 class="card-title">@(string.IsNullOrEmpty(book.Title) ? "Name is not available" : book.Title)</h3>
+                                    <p class="card-text">@(string.IsNullOrEmpty(book.Description) ? "Description is not availabe": book.Description)</p>
+                                    <p class="card-text">Subject: @(string.IsNullOrEmpty(book.Subject.SubjectName) ? "Subject is not availabe": book.Subject.SubjectName)</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <a href="@book.PdfUrl" target="_blank" class="btn btn-sm btn-outline-secondary">Open book</a>
+                                        </div>
+                                        <small class="text-muted">Resource type: @(string.IsNullOrEmpty(book.Type) ? "NA" : book.Type)</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>*@

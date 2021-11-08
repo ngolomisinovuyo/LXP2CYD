@@ -1,0 +1,28 @@
+﻿@model LPX2YCDProject2020.Models.AddressModels.CascadingAddressClass
+
+@{
+    ViewData["Title"] = "Settings";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+}
+
+<a asp-action="ViewProvinces" class="link-black link-info">Back to provinces</a>
+<div class="container">
+    <h3>@Model?.City.CityName</h3>
+
+    <h4 class="h4">Suburbs in @Model.City.CityName</h4>
+    @if (Model?.suburbs == null)
+    {
+        <p class="text-danger">No suburbs to show</p>
+        <a class="link-primary" asp-action="Add cities">Add suburb</a>
+    }
+    else
+    {
+        @foreach (var a in Model.suburbs)
+        {
+            <p>@a.SuburbName &nbsp; <a asp-action="EditSuburb" asp-route-suburbId="@a.SuburbId">Edit</a>|<a asp-action="DeleteSuburb" asp-route-suburbId="@a.SuburbId">Delete</a> </p>
+        }
+        <br />
+        <a asp-action="AddSuburb" asp-route-id="@Model.City.CityId" class="link-secondary">Add suburbs to @Model.City.CityName</a>
+    }
+
+</div>

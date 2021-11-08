@@ -1,0 +1,48 @@
+﻿@model IEnumerable<LPX2YCDProject2020.Models.AddressModels.Province>
+
+    @{
+        ViewData["Title"] = "Provinces";
+        Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+    }
+
+    <div class="container">
+        <h1>View Provinces</h1>
+
+        <p>
+            <a asp-action="AddProvinces">Add new province</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    
+                    <th>
+                        @Html.DisplayNameFor(model => model.ProvinceName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Country)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                       
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProvinceName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Country)
+                        </td>
+                        <td>
+
+                            <a class="btn btn-primary" asp-action="EditProvince" asp-controller="Admin" asp-route-provinceId="@item.ProvinceId" >Edit</a>|
+                            <a class="btn btn-default" asp-action="GetCitiesByProvince" asp-controller="Admin"  asp-route-provinceId="@item.ProvinceId">Details</a>|
+                            <a class="btn btn-danger" asp-action="DeleteProvince" asp-controller="Admin" asp-route-provinceId="@item.ProvinceId">Delete</a>|
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

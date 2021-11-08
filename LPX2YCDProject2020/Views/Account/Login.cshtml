@@ -1,0 +1,67 @@
+﻿@model LPX2YCDProject2020.Models.Account.SignInModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link href="~/lib/style.css" rel="stylesheet" />
+    <link href="~/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <style type="text/css">
+        body {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 100%;
+            background: url(/Images/bbb.jpg)no-repeat;
+            background-size: cover;
+            color: black;
+        }
+    </style>
+
+</head>
+<body>
+    <div>
+       <partial name="_LoginHeader" />
+    </div>
+    <div class="login-form">
+        <div class="top-login">
+            <span>  <img src="~/Images/group.png" alt="Head image" /></span>
+          
+        </div>
+        <h1>Login</h1>
+        <div class="login-top">
+            <form method="post" asp-action="Login" asp-controller="Account">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger" style="background-color:white;"></div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" type="text" value="User name" class="form-control" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'User name';}" />
+                    <div class="clear"> </div>
+                </div>
+                <div class="form-group">
+                   <label asp-for="Password" class="control-label"></label>
+                    <input type="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'password';}" asp-for="Password" class="form-control"/>
+                    <div class="clear"> </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="rememberMe" /> @Html.DisplayNameFor(model => model.rememberMe)
+                    </label>
+                </div>
+                <div class="log-bwn">
+                    <input type="submit" value="Login">
+                </div>
+            </form>
+            <p><a asp-action="ForgotPassword" asp-controller="Account">Forgot password?</a></p>
+            <p style="color:red;"> Click <a asp-action="SignUp" asp-controller="Account">here</a> to signup</p>
+        </div>
+        <p class="copy">© @DateTime.Now.Year LXP2. All rights reserved</p>
+    </div>
+</body>
+</html>

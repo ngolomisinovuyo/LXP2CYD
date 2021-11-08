@@ -1,0 +1,68 @@
+﻿@model LPX2YCDProject2020.Models.PortalModels.SubjectResources
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+}
+
+<div class="w3l-grids-block-5 w3l-grids-block-6 py-5">
+    <div class="container py-md-5 py-4">
+        <div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+            <h3 class="title-main">Study <span>Resources</span></h3>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                    </ol>
+                    <div class="carousel-inner">
+
+                        <div>
+                            <img class="d-block w-100" src="~/StudyResources/materialThumbnail.jpg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>@Model.Title</h1>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-primary">
+                        <span class="label label-primary">Material type: </span>
+                        <span class="monospaced">@Model.Type</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-primary">
+                        <span class="label label-primary">Subject: </span>
+                        <span class="monospaced">@Model.Subject.SubjectName</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="description">
+                            @Model.Description
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <a class="btn btn-outline-primary" href="@Model.PdfUrl" target="_blank">
+                            Read now
+                        </a>
+                    </div>
+                </div>
+                <hr />
+            </div>
+        </div>
+    </div>
+</div>
+

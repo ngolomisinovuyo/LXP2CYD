@@ -1,0 +1,37 @@
+﻿@model LPX2YCDProject2020.Models.AddressModels.City
+
+@{
+    ViewData["Title"] = "City";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+
+}
+
+<div class="container">
+
+    <h1>Edit city details</h1>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="EditCity">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="CityId" hidden />
+                <input asp-for="provinceId" hidden />
+                <div class="form-group">
+                    <label class="control-label">City name</label>
+                    <input asp-for="CityName" class="form-control" />
+                    <span asp-validation-for="CityName" class="text-danger"></span>
+                </div>
+               <br />
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="GetCitiesByProvince" asp-route-provinceId="@Model.provinceId">Back to cities</a>
+    </div>
+</div>
+

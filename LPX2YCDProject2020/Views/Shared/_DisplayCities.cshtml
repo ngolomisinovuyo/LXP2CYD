@@ -1,0 +1,13 @@
+﻿@model LPX2YCDProject2020.Models.AddressModels.City
+
+<option value="">----Select city----</option>
+
+@if (ViewBag.cityList != null)
+{
+    foreach (var a in ViewBag.cityList)
+    {
+        <option value="@a.Value">@a.Text</option>
+    }
+
+}
+

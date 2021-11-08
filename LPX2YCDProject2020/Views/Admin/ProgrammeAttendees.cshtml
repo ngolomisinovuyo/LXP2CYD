@@ -1,0 +1,87 @@
+﻿@model LPX2YCDProject2020.Models.AdminModels.ProgrammeAttendees
+@{
+    ViewData["Title"] = "Programme";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+}
+
+<h1>Programme Attendees</h1>
+
+<div class="container">
+
+    <div class="card">
+        <h5 class="card-header"><i class="fa fa-calendar"> </i> @Model.Programmes.StartDate - @Model.Programmes.EndDate</h5>
+        <div class="card-body">
+            <h5 class="card-title">@Model.Programmes.ProgrammeName</h5>
+            <p class="card-text">@Model.Programmes.Description</p>
+            <br />
+            <h6>Attendees</h6>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            Full name
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var x in Model.er)
+                    {
+                        foreach (var y in Model.Users)
+                        {
+                            if (x.UserId == y.Id)
+                            {
+                                <tr>
+                                    <td>
+                                        <div>
+                                            @y.FirstName @y.LastName
+                                        </div>
+                                    </td>
+
+                                    <td style="padding:5px;">
+                                        <span>
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" value="true" asp-for="@x.attended" /><label asp-for="@x.attended"></label>
+                                            </label>
+                                        </span>
+                                        <span>
+                                            <form asp-controller="Admin" asp-action="EditEnrolment">
+
+                                                <input name="ReservationId" value="@x.ReservationId" hidden />
+
+
+                                                <input type="submit" value="Save" class="btn btn-sm btn-outline-primary" />
+                                            </form>
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+
+               
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $.noConflict();
+        $(document).ready(function () {
+            $('#staticBackdrop').modal('show');
+        });
+
+
+
+    </script>
+}

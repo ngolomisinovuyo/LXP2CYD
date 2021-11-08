@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewData["Title"] = "Academic profile";
+    Layout = "~/Views/Shared/_userDashboard.cshtml";
+}
+
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+@model StudentSubjects
+
+<div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+    <h3 class="title-main">Edit<span> Subject</span></h3>
+</div>
+
+<form asp-action="EditStudentSubjects">
+    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+    <input hidden="hidden" asp-for="@Model.UserId" value="@User.FindFirst("studGroup").Value">
+    <div class="table">
+        <div class="row">
+
+            <div class="col-sm-2">
+                Subject
+            </div>
+
+            <div class="col-sm-1">
+                Year
+            </div>
+
+            <div class="col-sm-1">
+                Term 1
+            </div>
+
+            <div class="col-sm-1">
+                Term 2
+            </div>
+
+            <div class="col-sm-1">
+                Term 3
+            </div>
+
+            <div class="col-sm-1">
+                Term 4 target
+            </div>
+            <div class="col-sm-5">
+                Tell us more
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                @if (ViewBag.SubjectList != null)
+                {
+                    <select id="SubjectId" asp-for="@Model.SubjectId" class="form-control" asp-items="@ViewBag.SubjectList">
+                        <option>--Select subject--</option>
+                    </select>
+
+                }
+                <span asp-validation-for="@Model.SubjectId" class="text-danger" hidden="hidden"></span>
+            </div>
+
+            <div class="col-sm-1">
+                <input value="@DateTime.Now.Year.ToString()" asp-for="@Model.Year" id="Year" class="form-control" disabled="disabled" />
+            </div>
+
+            <div class="col-sm-1">
+                <input asp-for="@Model.FirstTermMark" id="FirstTermMark" placeholder="0" class="form-control" />
+                <span asp-validation-for="@Model.FirstTermMark" class="text-danger" hidden="hidden"></span>
+            </div>
+
+            <div class="col-sm-1">
+                <input asp-for="@Model.SecondTermMark" id="SecondTermMark" class="form-control" />
+                <span asp-validation-for="@Model.SecondTermMark" class="text-danger" hidden="hidden"></span>
+            </div>
+
+            <div class="col-sm-1">
+                <input asp-for="@Model.ThirdTermMark" id="ThirdTermMark" placeholder="0" class="form-control" />
+                <span asp-validation-for="@Model.SecondTermMark" class="text-danger" hidden="hidden"></span>
+            </div>
+
+            <div class="col-sm-1">
+                <input asp-for="@Model.Target" id="Target" placeholder="0" class="form-control" />
+                <span asp-validation-for="@Model.SecondTermMark" class="text-danger" hidden="hidden"></span>
+            </div>
+
+            <div class="col-sm-3">
+                <textarea asp-for="@Model.Comments" cols="2" rows="2" class="form-control" id="Comments" placeholder="We want to hear from you"></textarea>
+            </div>
+
+            <div class=" col-sm-2">
+                <input type="submit" value="Update" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<a asp-controller="Account" asp-action="SchoolReport"><i class="fa fa-backward"></i> Back</a>
+
+@section scripts{
+    <script type="text/javascript">
+        $.noConflict();
+        $(document).load(function () {
+            $("FirstTermMark").change(function () {
+                var value = $("#FirstTermMark").val;
+                if (value == null || value == 0) {
+                    $("#FirstTermMark") = 0;
+                    document.createElement("#FirstTermMark").innerHTML = 0;
+                }
+            });
+        });
+    </script>
+}

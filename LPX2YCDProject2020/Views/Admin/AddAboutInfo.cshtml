@@ -1,0 +1,181 @@
+﻿@model LPX2YCDProject2020.Models.HomeModels.CenterDetails
+
+@{
+    ViewData["Title"] = "About Info";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+}
+
+<div class="row d-flex justify-content-center">
+    <div class="col-md-8">
+        <h1 class="justify-content-center fa-underline">Update center Information</h1>
+        @if (Model?.Saved == true)
+        {
+            <div class="alert alert-success" role="alert">
+                <p>
+                    <span>
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </span>
+                    Center details updated successfully.
+                </p>
+            </div>
+        }
+
+        <form asp-action="UpdateAboutInfo" enctype="multipart/form-data" class="row g-3">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input hidden asp-for="CenterId" />
+
+            <div class="container">
+                <div class="row">
+                    <div class="profile-header-container">
+                        <div class="profile-header-img">
+                            <img class="img-circle" alt="Profile pic"  src="@Model?.ImageUrl" />
+                            <div class="custom-file">
+                                <span class="label label-default rank-label"> <input asp-for="ProfilePhoto" value="@Model.ProfilePhoto" class="form-control-file"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-6">
+                <div class="form-group">
+                    <label asp-for="BusinessName" class="control-label"></label>
+                    <input asp-for="BusinessName" value="@Model.BusinessName" class="form-control" />
+                    <span asp-validation-for="BusinessName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="EmailAddress" class="control-label"></label>
+                    <input asp-for="EmailAddress" value="@Model.EmailAddress" class="form-control" />
+                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="ContactNumber"  class="control-label"></label>
+                    <input asp-for="ContactNumber" value="@Model.ContactNumber" class="form-control" />
+                    <span asp-validation-for="ContactNumber" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <span><i class="fa fa-internet-explorer" aria-hidden="true"></i></span>
+                    <label asp-for="Url" class="control-label"></label>
+                    <input asp-for="Url" value="@Model.Url" class="form-control" />
+                    <span asp-validation-for="Url" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressLine1" class="control-label"></label>
+                <input asp-for="AddressLine1" value="@Model.AddressLine1" class="form-control" />
+                <span asp-validation-for="AddressLine1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddressLine2" class="control-label"></label>
+                <input asp-for="AddressLine2" value="@Model.AddressLine2" class="form-control" />
+                <span asp-validation-for="AddressLine2" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                @if (ViewBag.ProvinceList != null)
+                {
+                    <label asp-for="@Model.Suburb.City.Province.ProvinceId" class="control-label">Province</label>
+                    <select asp-for="@Model.Suburb.City.Province.ProvinceId" id="ProvinceId" class="form-control" asp-items="@ViewBag.ProvinceList">
+                        <option>--Select province--</option>
+                    </select>
+                }
+            </div>
+
+            <div class="col-md-6">
+                <label asp-for="@Model.Suburb.City.CityId" class="control-label">City</label>
+                <select asp-for="@Model.Suburb.City.CityId" id="CityId" class="form-control">
+                    <option> --Please select city--</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="@Model.SuburbId" class="control-label"></label>
+                <select asp-for="@Model.SuburbId"  id="SuburbId" class="form-control">
+                    <option> --Please select suburb--</option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-primary" />
+            </div>
+        </form>
+
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+
+<script src="~/lib/jquery/jquery.min.js"></script>
+
+@section scripts{
+
+    <script type="text/javascript">
+
+        $(document).ready(function ()
+        {
+            $("#ProvinceId").change(function () {
+                $("#SuburbId").empty();
+                $("#CityId").empty();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetCityList")',
+                    dataType: 'json',
+                    data: { provinceId: $("#ProvinceId").val() },
+
+                    success: function (cities) {
+                        $("#CityId").append('<option value="' + -1 + '">' + "--Select city--" + '</option>');
+
+                        $.each(cities, function (i, city) {
+                            $("#CityId").append('<option value="' + city.value + '">' + city.text + '</option>');
+                        });
+                    },
+                    error: function () {
+                        alert('an error has occured');
+                    }
+                });
+                return false;
+            });
+
+            $("#CityId").change(function () {
+                $("#SuburbId").empty();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetSuburbList")',
+                    dataType: 'json',
+                    data: { CityId: $("#CityId").val() },
+
+                    success: function (suburb) {
+                        $("#SuburbId").append('<option value="' + -1 + '">' + "--Select suburb--" + '</option>');
+
+                        $.each(suburb, function (i, local) {
+                            $("#SuburbId").append('<option value="' + local.value + '">' + local.text + '</option>');
+                        });
+                    }
+                });
+                return false;
+            });
+
+            $("#SuburbId").change(function () {
+                $("#PostalCode").empty();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetSuburbPCode")',
+                    dataType: 'json',
+                    data: { CityId: $("#SuburbId").val() },
+
+                    success: function (PostalCode) {
+                        $.each(PostalCode, function (i, local) {
+                            $("#PostalCode").append('<input text=' + local.text + '/>');
+                        });
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
+}

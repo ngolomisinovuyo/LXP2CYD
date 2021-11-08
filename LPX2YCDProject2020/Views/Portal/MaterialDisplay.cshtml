@@ -1,0 +1,78 @@
+﻿@model IEnumerable<LPX2YCDProject2020.Models.PortalModels.SubjectResources>
+
+@{
+    ViewData["Title"] = "MaterialDisplay";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+}
+
+<h3>Learner's Study Material</h3>
+
+<hr />
+@if (ViewBag.IsSuccess == true)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Operation successfully completed!</strong> <br />
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<p>
+    <a asp-action="AddMaterial">Create New</a>
+</p>
+@if (Model.Count() == 0)
+{
+    <p class="text-danger">No items to show click <a asp-action="AddMaterial" asp-controller="Portal">Here</a> to add new </p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Subject)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject.SubjectName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @*<form asp-controller="Portal"  asp-action="UpdateMaterial">
+                                <input asp-for="@item.Id" hidden />
+                                <input type="submit" value="Edit" />
+                            </form>*@
+                        <a asp-action="UpdateMaterial" asp-controller="Portal" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="ViewMaterialDetails" asp-controller="Portal" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="DeleteMaterial" asp-controller="Portal" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}

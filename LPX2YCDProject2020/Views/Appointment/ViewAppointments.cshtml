@@ -1,0 +1,203 @@
+﻿@model List<LPX2YCDProject2020.Models.Appointments.UserAppointments>
+
+@{
+    ViewData["Title"] = "My appointments";
+    Layout = "~/Views/Shared/_userDashboard.cshtml";
+}
+
+@if (ViewBag.IsSuccess == true)
+{
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    Operation completed sucessfully..
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+}
+<div>
+    <a asp-action="CreateAppointment" asp-controller="Appointment" class="btn btn-outline-primary">New Appointment</a>
+   <div>
+       <br />
+   </div>
+</div>
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                @*Heading*@
+                <h3 class="title">Upcoming <span>Appointments</span></h3>
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                @*Body section*@
+                <div class="row">
+                    @foreach (var a in Model)
+                    {
+                        @if (a.Date > DateTime.Now && a.Status == "Approved")
+                        {
+                            <span class="col-sm-2 col-sm-4">
+                                <div class="blog-card-single shadow-lg p-3 mb-5 bg-white rounded">
+                                    <div class="grids5-info position-relative">
+                                        <img src="/Images/appointment-slots.jpg" alt="" class="img-fluid" />
+                                    </div>
+                                    <div class="content-main-top">
+                                        <div class="content-top mb-4 mt-3">
+                                            <ul class="list-unstyled d-flex align-items-center justify-content-between">
+                                                <li> <i class="fa fa-calendar" aria-hidden="true"></i> @a.Date.ToShortDateString()</li>
+                                                <li> <i class="fa fa-clock-o" aria-hidden="true"></i>@a.Time.ToShortTimeString()</li>
+                                            </ul>
+                                        </div>
+                                        <h4><a>@a.appointmentTypes.Description</a></h4>
+                                        <p>@a.Message</p>
+                                        <br />
+
+                                        <p>@a.Status</p>
+
+                                        <div class="top-content-border d-flex align-items-center justify-content-between mt-5 pt-4">
+                                            <ul class="rating-list">
+                                                <a class="btn btn-sm btn-primary" asp-action="UpdateAppointment" asp-route-Id="@a.Id">Update appointment</a>
+                                            </ul>
+                                            &nbsp;
+
+                                            <form asp-controller="Appointment" asp-action="CancellAppointments" asp-route-Id="@a.Id">
+                                                <input value="@a.Id" asp-route-id="@a.Id" id="Id" hidden />
+                                                <input type="submit" value=" Cancel appointment" class="btn btn-sm btn-style btn-style-primary" onclick=" return confirm('Are you sure you want to cancel your appointment?'"/>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
+                        }
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                @*Heading*@
+                <h3 class="title3">Queued <span>Appointments</span></h3>
+            </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                @*Body section*@
+                <div class="row">
+                    @foreach (var a in Model)
+                    {
+                        @if (a.Date > DateTime.Now && a.Status == "Pending")
+                        {
+                            <span class="col-sm-2 col-sm-4 shadow-lg p-3 mb-5 bg-white rounded">
+                                <div class="blog-card-single">
+                                    <div class="grids5-info position-relative">
+                                        <img src="/Images/appointment-slots.jpg" alt="" class="img-fluid" />
+                                    </div>
+                                    <div class="content-main-top">
+                                        <div class="content-top mb-4 mt-3">
+                                            <ul class="list-unstyled d-flex align-items-center justify-content-between">
+                                                <li> <i class="fa fa-signal" aria-hidden="true"></i> @a.Date.ToShortDateString()</li>
+                                                <li> <i class="fa fa-clock-o" aria-hidden="true"></i>@a.Time.ToShortTimeString()</li>
+                                            </ul>
+                                        </div>
+                                        <h4><a>@a.appointmentTypes.Description</a></h4>
+                                        <p>@a.Message</p>
+                                        <br />
+
+                                        <p>@a.Status</p>
+
+                                        <div class="top-content-border d-flex align-items-center justify-content-between mt-5 pt-4">
+                                            <ul class="rating-list">
+                                                <a class="btn btn-sm btn-primary" asp-action="UpdateAppointment" asp-route-Id="@a.Id">Update appointment</a>
+                                            </ul>
+                                            &nbsp;
+
+                                            <form asp-controller="Appointment" asp-action="CancellAppointments" asp-route-Id="@a.Id">
+                                                <input value="@a.Id" asp-route-id="@a.Id" id="Id" hidden />
+                                                <input type="submit" value="Cancel appointment" class="btn btn-sm btn-style btn-style-primary" onclick=" return confirm('Are you sure you want to cancel your appointment?')" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </span>
+                        }
+
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                @*Heading*@
+                <h3 class="title3"> <span>Appointment history</span></h3>
+            </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+                @*Body section*@
+                <div class="row">
+                    @foreach (var a in Model)
+                    {
+
+                        @if (a.Date < DateTime.Now)
+                        {
+                            @if (a.Arrived == true && a.Status == "Approved")
+                            {
+                                <span class="col-sm-2 col-sm-4">
+                                    <div class="card border-danger mb-3 shadow-lg p-3 mb-5 bg-white rounded" style="max-width: 18rem;">
+                                        <div class="card-header"><i class="fa fa-calendar"></i> @a.Date.ToShortDateString() &nbsp; <span><i class="fa fa-clock"></i></span>@a.Time.ToShortTimeString()</div>
+
+                                        <div class="card-body text-danger">
+                                            <h5 class="card-title">@a.appointmentTypes.Description</h5>
+
+                                            <p>Note to us: @a?.Message</p>
+                                            <p>Assisted by: @a?.assignedEmployee</p>
+                                        </div>
+                                        <div class="card-footer bg-transparent border-success">
+                                            <p> Note to you: @a.CenterNotes</p>
+                                        </div>
+
+                                    </div>
+                                </span>
+                            }
+
+                        }
+                    }
+
+                    <h5>Forfeited appointments</h5>
+                    @foreach (var a in Model)
+                    {
+                        @if (a.Date < DateTime.Now)
+                        {
+                            @if (a.Arrived == false && a.Status == "Approved")
+                            {
+                                <span class="col-sm-2 col-sm-4">
+                                    <div class="card border-danger mb-3 shadow-lg p-3 mb-5 bg-white rounded" style="max-width: 18rem;">
+                                        <div class="card-header"><i class="fa fa-calendar"></i> @a.Date.ToShortDateString() &nbsp; <span><i class="fa fa-clock"></i></span>@a.Time.ToShortTimeString()</div>
+                                        <div class="text-danger">You did not arrive for this appointment</div>
+                                    </div>
+                                </span>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        function Deleted() {
+            alert("Appointment successfully deleted");
+        };
+
+
+    </script>
+
+}

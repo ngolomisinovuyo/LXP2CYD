@@ -1,0 +1,33 @@
+﻿@model ContactUsModel
+
+@{
+    ViewData["Title"] = "Contact Us";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.message != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.message");
+            };
+    </script>
+}
+    <!-- contact us page content -->
+    <section class="w3l-contact py-5" id="contact">
+        <div class="container py-md-5 py-4 mb-5">
+            <div class="mx-auto" style="max-width:1000px">
+                <div class="row contact-block">
+                    <partial name="_ContactUsDetailsList" model="Model.systemDetails" />
+                </div>
+                <!-- contact form -->
+                <div class="contact-form-sec pt-5 mt-md-5">
+                    <partial name="_EnquiryForm" , model="Model.ContactUsFormModel" />
+                </div>
+                <!-- //contact form -->
+            </div>
+        </div>
+    </section>
+    <!-- //contact page -->
+
+ 

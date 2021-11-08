@@ -1,0 +1,28 @@
+﻿@model ButtonPartialModel
+
+<td style="width:150px;">
+    <div class="btn-group" role="group">
+        @*<div>
+            <partial name="_IndividualButtonPartialView", model='new ButtonPartialModel
+            {
+                Action="EditSubjectDetails",
+                 ButtonType="btn-primary",
+                 Glyph="pencil",
+                 Text="Edit",
+                 ServiceID = Model.ServiceID
+            }' />
+        </div>*@
+
+        <div>
+            <partial name="_IndividualButtonPartialView" ,
+                     model='new ButtonPartialModel
+            {
+                Action="deleteEnrolment",
+                 ButtonType="btn-danger",
+                 Glyph="trash",
+                 Text="Delete",
+                 ServiceID = Model.ServiceID
+            }' />
+        </div>
+    </div>
+</td>

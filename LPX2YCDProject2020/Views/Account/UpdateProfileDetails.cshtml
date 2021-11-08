@@ -1,0 +1,339 @@
+﻿@model StudentProfileModel
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
+
+@{
+    ViewData["Title"] = "Update profile";
+    Layout = "~/Views/Shared/_userDashboard.cshtml";
+}
+
+<div class="container-fluid h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-10 col-md-8 col-lg-6">
+            <div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+                <h3 class="title-main">Update <span>Profile</span></h3>
+            </div>
+
+            @if (ViewBag.IsSuccess == true)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>
+                        Updated.
+                    </strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            }
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <form asp-controller="Account" enctype="multipart/form-data" class="row g-3">
+
+                <input asp-for="ImageUrl" hidden />
+
+                <div class="row">
+
+                    <div class="media d-flex align-items-center " style="margin:auto; width:60%;">
+                        <img src="@Model?.ImageUrl" alt="Profile photo" class="img-thumbnail img-circle shadow-sm" height="500" width="500" />
+                    </div>
+                    <!-- badge -->
+                    <div class="custom-file">
+                        <span class="label label-default rank-label"> <input asp-for="@Model.ProfilePhoto" class="form-control-file"></span>
+                    </div>
+
+                </div>
+
+                <div class="col-12">
+                    <br />
+                </div>
+                <div class="small text-muted text-danger">fields marked with (<bold class="text-danger">*</bold>) are required</div>
+                <div class="row border border-light">
+                    <h4 class="text-bold">Personal details</h4>
+                    <div class="col-md-6">
+                        <label class="form-label">Name</label>
+                        <input value="@User.FindFirst("UserFirstName").Value" disabled="disabled" class="form-control">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Surname</label>
+                        <div class="input-group mb-3">
+                            <input disabled="disabled" class="form-control" value="@User.FindFirst("UserLastName").Value">
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label asp-for="@Model.IDNumber" class="form-label"></label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><bold class="text-danger">*</bold></span>
+                            <input type="number" asp-for="@Model.IDNumber" maxlength="13" minlength="13" class="form-control" />
+                        </div>
+                        <span asp-validation-for="@Model.IDNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label asp-for="@Model.DateOfBirth" class="form-label"></label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><bold class="text-danger">*</bold></span>
+                            <input type="date" asp-for="@Model.DateOfBirth" class="form-control" />
+                        </div>
+
+                        <span asp-validation-for="@Model.DateOfBirth" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label asp-for="@Model.Gender" class="control-label"></label>
+                        <select asp-for="@Model.Gender" class="form-control">
+                            <option value="">--Please select gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <span asp-validation-for="@Model.Gender" class="text-danger"></span>
+                    </div>
+                    <br />
+                </div>
+
+                <div class="col-12">
+                    <br />
+                </div>
+
+                <div class="row border border-light">
+                    <h4>Contact details</h4>
+                    <div class="col-md-6">
+
+                        <label asp-for="@Model.ContactNumber" class="form-label"></label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><bold class="text-danger">*</bold></span>
+                            <input type="number" asp-for="@Model.ContactNumber" maxlength="10" minlength="10" class="form-control" />
+                        </div>
+                        <span asp-validation-for="@Model.ContactNumber" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+
+                        <label class="form-label">Email</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><bold class="text-danger">*</bold></span>
+                            <input value="@User.FindFirst("EmailAddr").Value" disabled="disabled" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <br />
+                </div>
+
+                <div class="row border border-light">
+                    <h4>Residential address</h4>
+                    <div class="col-6">
+                        <label asp-for="@Model.AddressLine1" class="form-label"></label>
+                        <input type="text" class="form-control" asp-for="@Model.AddressLine1">
+                    </div>
+                    <div class="col-6">
+                        <label asp-for="@Model.AddressLine2" class="form-label"></label>
+                        <input type="text" class="form-control" asp-for="@Model.AddressLine2">
+                    </div>
+
+                    <div class="col-md-6">
+                        @if (ViewBag.ProvinceList != null)
+                        {
+                            <label asp-for="@Model.ProvinceId" class="control-label"></label>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="basic-addon1"><bold class="text-danger">*</bold></span>
+                                <select value="@Model?.ProvinceId" asp-for="@Model.ProvinceId" class="form-control" asp-items="@ViewBag.ProvinceList">
+                                    <option value="@Model.ProvinceId">--Select province--</option>
+                                </select>
+                            </div>
+                        }
+                        <span asp-validation-for="@Model.ProvinceId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="@Model.CityId" class="control-label"></label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><bold class="text-danger">*</bold></span>
+                            <select asp-for="@Model.CityId" value="@Model?.CityId" id="CityId" class="form-control">
+                                <option value="@Model?.CityId"> --Please select city--</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="@Model.CityId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-7">
+                        <label asp-for="@Model.SuburbId" class="control-label"></label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1"><bold class="text-danger">*</bold></span>
+                            <select asp-for="@Model.SuburbId" id="SuburbId" value="@Model?.SuburbId" class="form-control">
+                                <option value="@Model?.SuburbId"> --Please select suburb--</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="@Model.SuburbId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <br />
+                </div>
+
+                <div class=" row border border-light">
+                    <h4 class="h4">School details</h4>
+                    <div class="col-8">
+                        <label asp-for="@Model.NameOfSchool" class="form-label"></label>
+                        <input type="text" class="form-control" asp-for="@Model.NameOfSchool">
+                    </div>
+                    <div class="col-4">
+                        <label asp-for="@Model.Grade" class="form-label"></label>
+                        <input type="text" class="form-control" asp-for="@Model.Grade">
+                    </div>
+
+                    <div class="col-12">
+                        <br />
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/bootstrap/dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+@section scripts{
+
+    <script type="text/javascript">
+        $.noConflict();
+        $(document).ready(function () {
+
+            $("#ProvinceId").change(function () {
+                $("#SuburbId").empty();
+                $("#CityId").empty();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetCityList")',
+                    dataType: 'json',
+                    data: { provinceId: $("#ProvinceId").val() },
+
+                    success: function (cities) {
+                        $("#CityId").append('<option value="' + -1 + '">' + "--Select city--" + '</option>');
+
+                        $.each(cities, function (i, city) {
+                            $("#CityId").append('<option value="' + city.value + '">' + city.text + '</option>');
+                        });
+                    },
+                    error: function () {
+                        alert('an error has occured');
+                    }
+                });
+                return false;
+            });
+
+            $("#CityId").change(function () {
+                $("#SuburbId").empty();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetSuburbList")',
+                    dataType: 'json',
+                    data: { CityId: $("#CityId").val() },
+
+                    success: function (suburb) {
+                        $("#SuburbId").append('<option value="' + -1 + '">' + "--Select suburb--" + '</option>');
+
+                        $.each(suburb, function (i, local) {
+                            $("#SuburbId").append('<option value="' + local.value + '">' + local.text + '</option>');
+                        });
+                    }
+                });
+                return false;
+            });
+
+            $("#SuburbId").change(function () {
+                $("#PostalCode").empty();
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetSuburbPCode")',
+                    dataType: 'json',
+                    data: { CityId: $("#SuburbId").val() },
+
+                    success: function (PostalCode) {
+                        $.each(PostalCode, function (i, local) {
+                            $("#PostalCode").append('<input text=' + local.text + '/>');
+                        });
+                    }
+                });
+                return false;
+            });
+
+            //$('#IDNumber').mouseleave(function () {
+
+            //    var idNumber = $('#IDNumber').val();
+
+            //    // assume everything is correct and if it later turns out not to be, just set this to false
+            //    var correct = true;
+
+            //    //Ref: http://www.sadev.co.za/content/what-south-african-id-number-made
+            //    // SA ID Number have to be 13 digits, so check the length
+            //    if (idNumber.length != 13 || !isNumber(idNumber)) {
+            //        alert('Id number must be 13 digits longs');
+            //        $('#IDNumber').empty();
+            //        correct = false;
+            //    }
+
+            //    // get first 6 digits as a valid date
+            //    var tempDate = new Date(idNumber.substring(0, 2), idNumber.substring(2, 4) - 1, idNumber.substring(4, 6));
+
+            //    var id_date = tempDate.getDate();
+            //    var id_month = tempDate.getMonth();
+            //    var id_year = tempDate.getFullYear();
+
+            //    var fullDate = id_year + "/" + id_month + 1 + "/" + id_date;
+
+            //    if (!((tempDate.getYear() == idNumber.substring(0, 2)) && (id_month == idNumber.substring(2, 4) - 1) && (id_date == idNumber.substring(4, 6)))) {
+            //        //error.append('<p>ID number does not appear to be authentic - date part not valid</p>');
+            //        correct = false;
+            //    }
+
+            //    // get the gender
+            //    var genderCode = idNumber.substring(6, 10);
+            //    var gender = parseInt(genderCode) < 5000 ? "Female" : "Male";
+
+            //    // get country ID for citzenship
+            //    var citzenship = parseInt(idNumber.substring(10, 11)) == 0 ? "Yes" : "No";
+
+            //    // apply Luhn formula for check-digits
+            //    var tempTotal = 0;
+            //    var checkSum = 0;
+            //    var multiplier = 1;
+            //    for (var i = 0; i < 13; ++i) {
+            //        tempTotal = parseInt(idNumber.charAt(i)) * multiplier;
+            //        if (tempTotal > 9) {
+            //            tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
+            //        }
+            //        checkSum = checkSum + tempTotal;
+            //        multiplier = (multiplier % 2 == 0) ? 1 : 2;
+            //    }
+            //    if ((checkSum % 10) != 0) {
+            //        //error.append('<p>ID number does not appear to be authentic - check digit is not valid</p>');
+            //        alert('Id number must be 13 digits longs');
+            //        correct = false;
+            //    };
+
+            //    // if no error found, hide the error message
+            //    if (correct) {
+
+            //        $('#DateOfBirth').append(fullDate.val);
+            //        $('#Gender').append(gender.val);
+            //        alert('Done');
+            //    }
+
+            //    else {
+            //        alert("This id number is invalid");
+            //    };
+            //});
+
+        });
+
+
+    </script>
+}

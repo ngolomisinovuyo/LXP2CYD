@@ -1,0 +1,45 @@
+﻿@model IEnumerable<LPX2YCDProject2020.Models.AddressModels.City>
+
+@{
+    ViewData["Title"] = "Cities";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <h1>ViewCities</h1>
+
+    <p>
+        <a asp-action="AddNewCity">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CityName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Province)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CityName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Province.ProvinceName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.CityId">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.CityId">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

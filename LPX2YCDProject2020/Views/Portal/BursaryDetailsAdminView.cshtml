@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewData["Title"] = "Administration";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+}
+@model LPX2YCDProject2020.Models.PortalModels.Bursary
+
+<div class="container-fluid h-100">
+
+    @if (ViewBag.IsSuccess == true)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Operation successfully completed!</strong> <br />
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+        <h3 class="title-main"> <span>Bursaries</span></h3>
+        <hr />
+    </div>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-3">
+            <i class="fa fa-calendar"></i> @Html.DisplayNameFor(model => model.openingDate)
+        </dt>
+        <dd class="col-sm-9">
+            @Model.openingDate.ToShortDateString()
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(c => c.RequiredSubjects)
+        </dt>
+        <dd class="col-sm-9">
+            @if (Model.RequiredSubjects == null)
+            {
+                <p class="text-danger">No subjects added,   <a asp-controller="Portal" asp-action="AddRequiredSubject" asp-route-id="@Model.Id">Add subjects</a></p>
+            }
+            else
+            {
+                @foreach (var d in Model.RequiredSubjects)
+                {
+                    @d.SubjectDetails.SubjectName @d.Percentage<span>% &nbsp;</span> 
+                                                               <span>
+                                                                   <form asp-action="RemoveBursarySubject" asp-controller="Portal">
+                                                                       <input hidden name="BursaryId" value="@d.BursaryId" />
+                                                                       <input hidden name="SubjectId" value="@d.SubjectId" />
+                                                                       <input type="submit" value="delete" class="link-danger" onclose="return confirm('Are you sure you want to delete the subject?')" />
+                                                                   </form>
+                                                               </span>
+                    @*<a asp-action="RemoveBursarySubject" asp-route-BursaryId="@d.BursaryId" asp-route-SubjectId ="@d.SubjectId">delete</a>*@
+
+                    <br />
+                }
+            }
+            <a asp-controller="Portal" asp-action="AddRequiredSubject" asp-route-id="@Model.Id" class=" btn btn-sm btn-outline-primary">Add subjects</a>
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.SponsoredFields)
+        </dt>
+        <dd class="col-sm-9">
+            @if (Model.SponsoredFields == null)
+            {
+                <p class="text-danger">No fields added,   <a asp-controller="Portal" asp-action="AddBursarySubject" asp-route-id="@Model.Id">Add sponsored fields</a></p>
+            }
+            else
+            {
+                @foreach (var v in Model.SponsoredFields)
+                {
+                    @v.Course.CourseName
+
+                    <form asp-action="RemoveBursaryModule" asp-controller="Portal">
+                        <input hidden name="BursaryId" value="@v.BursaryId" />
+                        <input hidden name="CourseId" value="@v.CourseId" />
+                        <input type="submit" value="delete" class="link-danger" onclose="return confirm('Are you sure you want to delete the module?')" />
+                    </form>
+
+                    @*<a asp-action="RemoveBursaryModule" asp-route-BursaryId="@v.BursaryId" asp-route-CourseId="@v.CourseId">delete</a> <br />*@
+                }
+            }
+            <a asp-controller="Portal" asp-action="AddBursarySubject" asp-route-id="@Model.Id" class=" btn btn-sm btn-outline-primary">Add subjects</a>
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.RequiredDocuments)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.RequiredDocuments)
+        </dd>
+        <dt class="col-sm-3">
+            <i class="fab fa-internet-explorer"></i> @Html.DisplayNameFor(model => model.Url)
+        </dt>
+        <dd class="col-sm-9">
+            <a> @Html.DisplayFor(model => model.Url) </a>
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.MinimumRequirements)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.MinimumRequirements)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.ClosingDate)
+        </dt>
+        <dd class="col-sm-3">
+            @Model.ClosingDate.ToShortDateString()
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="ListBursaries" class="btn btn-sm btn-primary">Back to List</a>
+</div>

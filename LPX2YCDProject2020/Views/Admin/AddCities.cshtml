@@ -1,0 +1,33 @@
+﻿@model LPX2YCDProject2020.Models.AddressModels.CascadingAddressClass
+
+@{
+    ViewData["Title"] = "Cities";
+    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+}
+
+<div class="container">
+    <h4>Add city to @Model.Province.ProvinceName</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="AddCities">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input asp-for="@Model.City.provinceId" value="@Model.Province.ProvinceId" hidden />
+
+                <div class="form-group">
+                    <label asp-for="@Model.City.CityName" class="control-label"></label>
+                    <input asp-for="@Model.City.CityName" class="form-control" />
+                    <span asp-validation-for="@Model.City.CityName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="GetCitiesByProvince" asp-route-provinceId="@Model.Province.ProvinceId">View cities in  @Model.Province.ProvinceName</a>
+    </div>
+</div>

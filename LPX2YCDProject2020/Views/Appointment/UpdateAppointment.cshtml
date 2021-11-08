@@ -1,0 +1,101 @@
+﻿@model LPX2YCDProject2020.Models.Appointments.UserAppointments
+
+@{
+    ViewData["Title"] = "Update Appointment";
+    Layout = "~/Views/Shared/_userDashboard.cshtml";
+
+}
+
+<div class="container-fluid h-100">
+    <div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+        <h3 class="title-main">Update<span>appointment</span></h3>
+    </div>
+
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-md-4">
+            <form asp-action="UpdateAppointment">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input type="hidden" asp-for="Id" />
+                <input asp-for="assignedEmployee" hidden  />
+                <input asp-for="userId" hidden />
+                <input asp-for="Status" hidden />
+
+                <div class="form-group">
+                    <label asp-for="Time" class="control-label"></label>
+                    <input asp-for="Time" onchange="CheckTime(this)" class="form-control" />
+                    <span asp-validation-for="Time" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Date" class="control-label"></label>
+                    <input asp-for="Date" class="form-control" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Message" class="control-label"></label>
+                    <textarea asp-for="Message" class="form-control" ></textarea>
+                    <span asp-validation-for="Message" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CenterNotes" class="control-label"></label>
+                    <textarea asp-for="CenterNotes" disabled class="form-control"></textarea>
+                    <span asp-validation-for="CenterNotes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Status" class="control-label"></label>
+                    <input asp-for="Status" disabled class="form-control" />
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AppointmentTypeId" class="control-label"></label>
+                    <select asp-for="AppointmentTypeId" class="form-control" asp-items=" ViewBag.AppointmentTypes"></select>
+                    <span asp-validation-for="AppointmentTypeId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />|
+                </div>
+            </form>
+            <form asp-controller="Appointment" asp-action="CancellAppointments" asp-route-Id="@Model.Id">
+                <input value="@Model.Id" asp-route-id="@Model.Id" id="Id" hidden />
+                <input type="submit" value=" Cancel appointment" class="btn btn-sm btn-style btn-style-primary" />
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="ViewAppointments" class="btn-secondary">Back to List</a>
+    </div>
+</div>
+
+@section scripts{ 
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        //Disables previous dates
+        var todaysDate = new Date();
+
+        var month = todaysDate.getMonth() + 1;
+        var day = todaysDate.getDate() +1;
+        var year = todaysDate.getFullYear();
+
+        if (month < 10)
+            month = '0' + month.toString();
+        if (day < 10)
+            day = '0' + day.toString();
+
+        var maxDate = year + '-' + month + '-' + day;
+        $('#Date').attr('min', maxDate);
+        //End
+
+    });
+    function CheckTime() {
+        var time = document.getElementById("Time").value;
+        if (time < "08:00" || time > "16:00") {
+            alert("Outside operating hours, please select time between 08:00 and 16:00");
+            $("Time").attr("min", '08:15');
+            document.getElementById("Time").innerHTML = '08:15';
+        }
+    }
+</script>
+}

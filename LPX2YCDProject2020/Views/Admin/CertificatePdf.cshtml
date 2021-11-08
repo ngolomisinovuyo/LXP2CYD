@@ -1,0 +1,63 @@
+﻿@model LPX2YCDProject2020.Models.AdminModels.CertificateViewModel
+
+@{
+    ViewData["Title"] = "CertificateOfParticipation";
+    Layout = null;
+}
+
+    <div style="width:1000px; height:900px; padding:20px; text-align:center; border: 10px solid #787878">
+        <div style="width:950px; height:850px; padding:20px; text-align:center; border: 5px solid #787878">
+
+            <div class="header_bg">
+                <div class="header">
+                    <div class="head-t">
+                        <div class="logo" style="height:150px; width:160px;">
+                            <img src="/Images/courseThumbnail.png" class="img-responsive" alt="Center Logo">
+                        </div>
+                        <!-- start header_right -->
+                        <div class="header_right">
+                            <div class="rgt-bottom">
+                                <div class="log">
+                                    <div class="login">
+                                        <div id="loginContainer">
+                                            <img src="@Model.learner.ImageUrl" alt="Profile photo" class="mr-5 img-thumbnail shadow-sm" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="reg">
+
+                                </div>
+                                <div class="cart box_1">
+
+                                    <div class="clearfix"> </div>
+                                </div>
+                                <div class="create_btn">
+
+                                </div>
+                                <div class="clearfix"> </div>
+                            </div>
+                            <div class="search">
+
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <span style="font-size:50px; font-weight:bold">Certificate of Participation</span>
+            <br><br>
+            <span style="font-size:25px"><i>This is to certify that</i></span>
+            <br><br>
+            <span style="font-size:30px"><b>@User.FindFirst("UserFirstName").Value @User.FindFirst("UserLastName").Value</b></span>
+            <br />
+            <span style="font-size:30px"><b>Id number: @Model.learner.IDNumber</b></span><br /><br />
+            <span style="font-size:30px">Has attended the <b>@Model.programme.ProgrammeName programme</b></span> <br />
+            <span style="font-size:20px">(@Model.programme.Description)</span> <br /><br />
+            <span style="font-size:30px"><i>at <b>@Model.centerDetails.BusinessName</b> </i></span> <br /><br />
+            <span style="font-size:20px"><i>dated</i></span><br>
+            <span style="font-size:20px">@Model.programme.StartDate.ToShortDateString() - @Model.programme.EndDate.ToShortDateString()</span>
+        </div>
+    </div>

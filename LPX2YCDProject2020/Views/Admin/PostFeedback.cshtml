@@ -1,0 +1,57 @@
+﻿  @model LPX2YCDProject2020.Models.Account.StudentProgramViewModel
+@{
+    ViewData["Title"] = "Feedback";
+    Layout = "~/Views/Shared/_userDashboard.cshtml";
+}
+
+
+    <div class="container py-md-5 py-4">
+        <div class="title-heading-w3 text-center mx-auto mb-5 pb-sm-4">
+            <h3 class="title-main"><span>Feedback</span></h3>
+        </div>
+
+        <a class="btn btn-md btn-primary" asp-controller="Admin" asp-action="CertificateOfParticipation" asp-route-id="@Model.rsvp.ProgramId"><i class="fa fa-certificate" aria-hidden="true"></i> Print Certificate</a>
+        
+        <div class="row justify-content-center"  >
+            <div class="col-lg-6 col-md-8" >
+                <div class="blog-card-single">
+                    <div class="grids5-info position-relative">
+                        <img src="~/Images/courseThumbnail.png" alt="" class="img-fluid" />
+                        <div class="meta-list">
+                            <a asp-controller="Admin" asp-action="Courses">@Model.Programmes.EventCategory</a>
+                        </div>
+                        <div class="course-price-item">
+                            <h6>@Model.Programmes.Duration</h6>
+                        </div>
+                    </div>
+                    <div class="content-main-top">
+                        <div class="content-top mb-4 mt-3">
+                            <ul class="list-unstyled d-flex align-items-center justify-content-between">
+                                <li> <i class="fa fa-calendar" aria-hidden="true"></i> @Model.Programmes.StartDate.ToShortDateString()</li>
+                                <li> <i class="fa fa-clock-o" aria-hidden="true"></i>@Model.Programmes.StartTime.ToShortTimeString()</li>
+                            </ul>
+                        </div>
+                        <h4><a href="courses.html">@Model.Programmes.ProgrammeName</a></h4>
+                        <p>@Model.Programmes.Description</p>
+                        <div class="top-content-border d-flex align-items-center justify-content-between mt-5 pt-4">
+                           
+                            <div>
+                                <form asp-controller="Admin" asp-action="PostFeedback">
+                                    <input hidden asp-for="@Model.rsvp.ReservationId" value="@Model.rsvp.ReservationId" />
+                                    <input hidden asp-for="@Model.rsvp.ProgramId" value="@Model.rsvp.ProgramId" />
+                                    <input hidden asp-for="@Model.rsvp.attended" value="@Model.rsvp.attended" />
+                                    <input hidden asp-for="@Model.rsvp.UserId" value="@Model.rsvp.UserId" />
+                                    <div>
+                                        <textarea asp-for="@Model.rsvp.Feedback" class="form-control" placeholder="Say something I'm giving up on you" rows="3" ></textarea>
+                                    </div>
+                                    <br />
+                                    <input type="submit" class="btn btn-sm btn-primary" value="Submit" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>

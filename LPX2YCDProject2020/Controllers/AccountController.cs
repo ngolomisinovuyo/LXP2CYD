@@ -31,7 +31,13 @@ namespace LPX2YCDProject2020.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
 
 
-        public AccountController(IWebHostEnvironment webHostEnvironment, ApplicationDbContext context, IAddressRepository addressRepository, IAccountRepository accountRepository, IUserService userService, UserManager<ApplicationUser> userManager)
+        public AccountController(
+            IWebHostEnvironment webHostEnvironment,
+            ApplicationDbContext context,
+            IAddressRepository addressRepository,
+            IAccountRepository accountRepository,
+            IUserService userService,
+            UserManager<ApplicationUser> userManager)
         {
             _accountRepository = accountRepository;
             _userService = userService;
@@ -127,8 +133,27 @@ namespace LPX2YCDProject2020.Controllers
         }
 
         //[Route("signup")]
-        public IActionResult SignUp() =>  View();
-       
+        public async Task<IActionResult> SignUp()
+        {
+            //SignUpModel signUpModel = new SignUpModel
+            //{
+            //    FirstName = "Vuyo",
+            //    LastName = "Ngolomi",
+            //    Password = "Password@1",
+            //    ConfirmPassword = "Password@1",
+            //    DateJoined = DateTime.Now.ToString("dd/MM/yyyy"),
+            //    Email = "ngolomisinovuyo@gmail.com"
+            //};
+            //var result = await _accountRepository.CreateAdminAsync(signUpModel);
+            //if (!result.Succeeded)
+            //{
+            //    foreach (var error in result.Errors)
+            //        ModelState.AddModelError("", error.Description);
+
+            //    return View();
+            //}
+            return View();
+        }
         //[Route("signup")]
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUpModel signUp)
@@ -591,7 +616,7 @@ namespace LPX2YCDProject2020.Controllers
                             return RedirectToAction(nameof(Administration));
                     }
                 }
-                if (result.IsNotAllowed)
+                else if (result.IsNotAllowed)
                     ModelState.AddModelError("", "Please verify your accout before attempting to login");
                 else if (result.IsLockedOut == true)
                     ModelState.AddModelError("", "Your account has been locked after 5 failed login attempts. Come back in 5..");

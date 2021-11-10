@@ -75,6 +75,25 @@ namespace LPX2YCDProject2020.Models
               .WithMany(r => r.Rsvps)
               .HasForeignKey(p => p.UserId);
 
+            builder.Entity<IdentityRole>().HasData(
+                new IdentityRole { Id = "1", Name = "Admin", NormalizedName = "Admin".ToUpper() },
+                new IdentityRole { Id = "2", Name = "Learner", NormalizedName = "Learner".ToUpper() },
+                new IdentityRole { Id = "3", Name = "Regional Manager", NormalizedName = "Regional Manager".ToUpper() },
+                new IdentityRole { Id = "4", Name = "Provicial Liason", NormalizedName = "Provicial Liason".ToUpper() },
+                new IdentityRole { Id = "5", Name = "Volunteer", NormalizedName = "Volunteer".ToUpper() }
+                );
+            builder.Entity<Province>().HasData(
+                new Province { ProvinceId = 1, ProvinceName = "Eastern Cape", Country = "South Africa" },
+                new Province { ProvinceId = 2, ProvinceName = "Western Cape", Country = "South Africa" },
+                new Province { ProvinceId = 3, ProvinceName = "Northern Cape", Country = "South Africa" },
+                new Province { ProvinceId = 4, ProvinceName = "KwaZulu Natal", Country = "South Africa" },
+                new Province { ProvinceId = 5, ProvinceName = "Free State", Country = "South Africa" },
+                new Province { ProvinceId = 6, ProvinceName = "North West", Country = "South Africa" },
+                new Province { ProvinceId = 7, ProvinceName = "Gauteng", Country = "South Africa" },
+                new Province { ProvinceId = 8, ProvinceName = "Mpumalanga", Country = "South Africa" },
+                new Province { ProvinceId = 9, ProvinceName = "Limpompo", Country = "South Africa" }
+                );
+
             //builder.Entity<RequiredSubject>()
             //     .HasKey(c => new { c.BursaryId, c.SubjectId });
 

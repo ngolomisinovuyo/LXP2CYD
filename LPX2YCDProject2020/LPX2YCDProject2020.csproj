@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Models\Account\ProvincialLiason\" />
-    <Folder Include="Views\Account\Provincial Liaison\" />
+    <Folder Include="Views\Account\CoordinatorAndLiaison\" />
     <Folder Include="wwwroot\Resources\" />
     <Folder Include="Views\User\" />
   </ItemGroup>

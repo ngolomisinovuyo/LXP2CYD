@@ -1,5 +1,4 @@
 ﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> _signInManager
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,6 +38,7 @@
                 <div>
                     @if (_signInManager.IsSignedIn(User))
                     {
+                       
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
                                 <h6 class="h6">Hello @(User.FindFirst("UserFirstName").Value) </h6>

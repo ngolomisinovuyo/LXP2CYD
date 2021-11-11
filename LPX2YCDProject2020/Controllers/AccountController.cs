@@ -29,7 +29,7 @@ namespace LPX2YCDProject2020.Controllers
         private readonly IAddressRepository _addressRepository;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
-
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public AccountController(
             IWebHostEnvironment webHostEnvironment,
@@ -37,7 +37,8 @@ namespace LPX2YCDProject2020.Controllers
             IAddressRepository addressRepository,
             IAccountRepository accountRepository,
             IUserService userService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _accountRepository = accountRepository;
             _userService = userService;
@@ -45,6 +46,7 @@ namespace LPX2YCDProject2020.Controllers
             _addressRepository = addressRepository;
             _userManager = userManager;
             _webHostEnvironment = webHostEnvironment;
+            _roleManager = roleManager;
         }
 
         public IActionResult CreateLiaisonAccount(bool Succeeded)
@@ -124,7 +126,8 @@ namespace LPX2YCDProject2020.Controllers
         }
 
         public IActionResult Administration() => View();
-       
+
+        public IActionResult RegionalCoordinator() => View("CoordinatorAndLiaison/Dashboard");
 
         public IActionResult MyDashBoard()
         {
@@ -135,23 +138,23 @@ namespace LPX2YCDProject2020.Controllers
         //[Route("signup")]
         public async Task<IActionResult> SignUp()
         {
-            //SignUpModel signUpModel = new SignUpModel
-            //{
-            //    FirstName = "Vuyo",
-            //    LastName = "Ngolomi",
-            //    Password = "Password@1",
-            //    ConfirmPassword = "Password@1",
-            //    DateJoined = DateTime.Now.ToString("dd/MM/yyyy"),
-            //    Email = "ngolomisinovuyo@gmail.com"
-            //};
-            //var result = await _accountRepository.CreateAdminAsync(signUpModel);
-            //if (!result.Succeeded)
-            //{
-            //    foreach (var error in result.Errors)
-            //        ModelState.AddModelError("", error.Description);
+            SignUpModel signUpModel = new SignUpModel
+            {
+                FirstName = "Jane",
+                LastName = "Doe",
+                Password = "Password@1",
+                ConfirmPassword = "Password@1",
+                DateJoined = DateTime.Now.ToString("dd/MM/yyyy"),
+                Email = "jane.doe@gmail.com"
+            };
+            var result = await _accountRepository.CreateProvincialLiaisonAsync(signUpModel);
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                    ModelState.AddModelError("", error.Description);
 
-            //    return View();
-            //}
+                return View();
+            }
             return View();
         }
         //[Route("signup")]
@@ -176,9 +179,10 @@ namespace LPX2YCDProject2020.Controllers
             return View(signUp);
         }
 
-        public IActionResult EmployeeSignUp(bool IsSuccess)
+        public async Task<IActionResult> EmployeeSignUp(bool IsSuccess)
         {
             ViewBag.IsSuccess = IsSuccess;
+            //var roles = await _roleManager.Roles.ToListAsync();
             return View();
         }
 
@@ -614,6 +618,9 @@ namespace LPX2YCDProject2020.Controllers
                             return RedirectToAction("ViewProfile", "Account");
                         else if (roles.Contains("Administrator"))
                             return RedirectToAction(nameof(Administration));
+                        else if (roles.Contains("RegCoordinator") || roles.Contains("Provincial Liaison Officer"))
+                            return RedirectToAction(nameof(RegionalCoordinator));
+
                     }
                 }
                 else if (result.IsNotAllowed)

@@ -52,7 +52,7 @@ namespace LPX2YCDProject2020.Models.Account
             if (result.Succeeded)
                 await GenerateNewEmailTokenAsync(user);
 
-            await _userManager.AddToRoleAsync(user, "Administartor");
+            await _userManager.AddToRoleAsync(user, "Administrator");
             return result;
         }
 

@@ -17,7 +17,7 @@ using LPX2YCDProject2020.Models.EmailModels;
 
 namespace LPX2YCDProject2020.Models
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser,IdentityRole, string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

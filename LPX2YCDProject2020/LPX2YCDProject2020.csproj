@@ -9,6 +9,16 @@
     <Folder Include="Views\Account\CoordinatorAndLiaison\" />
     <Folder Include="wwwroot\Resources\" />
     <Folder Include="Views\User\" />
+    <Folder Include="Areas\" />
+    <Folder Include="Areas\Coordinator\" />
+    <Folder Include="Areas\Coordinator\Controllers\" />
+    <Folder Include="Areas\Coordinator\Views\" />
+    <Folder Include="Areas\Coordinator\Views\Home\" />
+    <Folder Include="Areas\Coordinator\Views\Staff\" />
+    <Folder Include="Areas\Coordinator\Views\Appointments\" />
+    <Folder Include="Areas\Coordinator\Views\Centers\" />
+    <Folder Include="Areas\Coordinator\Views\YearPlans\" />
+    <Folder Include="Areas\Coordinator\dtos\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -10,10 +10,17 @@ namespace LPX2YCDProject2020.Models
     [Table("Signup")]
     public class SignUpModel
     {
-        
-        public int Id  { get; set; }
+        public SignUpModel()
+        {
 
-      
+        }
+        public SignUpModel(string firstName, string lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+        }
+
+        public int Id  { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         [Display(Name = "Name")]

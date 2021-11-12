@@ -127,7 +127,10 @@ namespace LPX2YCDProject2020.Controllers
 
         public IActionResult Administration() => View();
 
-        public IActionResult RegionalCoordinator() => View("CoordinatorAndLiaison/Dashboard");
+        public IActionResult RegionalCoordinator() {
+
+            return View("CoordinatorAndLiaison/Dashboard");
+        }
 
         public IActionResult MyDashBoard()
         {
@@ -182,7 +185,7 @@ namespace LPX2YCDProject2020.Controllers
         public async Task<IActionResult> EmployeeSignUp(bool IsSuccess)
         {
             ViewBag.IsSuccess = IsSuccess;
-            //var roles = await _roleManager.Roles.ToListAsync();
+           
             return View();
         }
 
@@ -619,7 +622,8 @@ namespace LPX2YCDProject2020.Controllers
                         else if (roles.Contains("Administrator"))
                             return RedirectToAction(nameof(Administration));
                         else if (roles.Contains("RegCoordinator") || roles.Contains("Provincial Liaison Officer"))
-                            return RedirectToAction(nameof(RegionalCoordinator));
+                            return RedirectToAction("Index","Home", new { area="Coordinator"});
+                            //return RedirectToAction(nameof(RegionalCoordinator));
 
                     }
                 }

@@ -93,8 +93,13 @@ namespace LPX2YCDProject2020
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                name: "default",
-                template: "{controller=Home}/{action=Home}/{id?}");
+                    name: "MyArea",
+                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Home}/{id?}"
+               );
             });
             RotativaConfiguration.Setup((Microsoft.AspNetCore.Hosting.IHostingEnvironment)env);
         }

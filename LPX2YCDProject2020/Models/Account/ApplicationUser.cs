@@ -10,6 +10,13 @@ namespace LPX2YCDProject2020.Models.Account
 {
     public class ApplicationUser : IdentityUser
     {
+
+        public ApplicationUser() { }
+        public ApplicationUser(string firstName, string lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+        }
         [Required(ErrorMessage = "Name is required")]
         [Display(Name = "Name")]
         public string FirstName { get; set; }
@@ -22,7 +29,7 @@ namespace LPX2YCDProject2020.Models.Account
         [DisplayFormat(DataFormatString = "{0:yyy-MM-dd}", ApplyFormatInEditMode = true)]
         public string DateJoined { get; set; }
 
-
+        //public virtual IList<IdentityRole> Roles { get; set; }
        
 
     }

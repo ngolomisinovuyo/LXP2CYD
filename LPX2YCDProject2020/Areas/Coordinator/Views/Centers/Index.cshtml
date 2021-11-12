@@ -1,0 +1,60 @@
+
+
+@{
+    ViewData["Title"] = "Appointments";
+    Layout = "~/Views/Shared/_ProvincialLiaisonMenu.cshtml";
+}
+
+<h4>Centers</h4>
+
+<p class="text-end">
+    <a class="btn btn-primary" asp-action="Create">New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+               Type
+            <th>
+                Manager
+            </th>
+            <th>
+                Coordinator
+            </th>
+            <th>
+                Active(Y/N)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+       
+            <tr>
+                <td>
+                    Ripfumelelo
+                </td>
+                <td>
+                    Youth Dev. Center
+                </td>
+                <td>
+                    Ms. Classy
+                </td>
+                <td>
+                    Joe Slovo
+                </td>
+               
+                <td>
+                    Yes
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="1">Edit</a> |
+                    <a asp-action="Details" asp-route-id="1">Details</a> |
+                    <a asp-action="Delete" asp-route-id="1">Delete</a>
+                </td>
+            </tr>
+        
+    </tbody>
+</table>

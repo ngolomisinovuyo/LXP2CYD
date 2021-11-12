@@ -1,17 +1,16 @@
-﻿@model LPX2YCDProject2020.Models.SignUpModel
-@inject Microsoft.AspNetCore.Identity.RoleManager<IdentityRole> _roleManager
+
 @{
-    ViewData["Title"] = "EmployeeSignUp";
-    Layout = "~/Views/Shared/_UserAdminLayout.cshtml";
+    ViewData["Title"] = "Add Center";
+    Layout = "~/Views/Shared/_ProvincialLiaisonMenu.cshtml";
 }
 
-<h4>Add Employee</h4>
+<h4>Add Center</h4>
 <hr />
 
 @if (ViewBag.IsSuccess == true)
 {
     <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <p>Employee added Successfully</p>
+        <p>Center added Successfully</p>
     </div>
 }
 
@@ -23,15 +22,15 @@
             <div class="row py-0 my-0">
                 <div class="col-md-6">
                     <div class="form-group py-0 my-0">
-                        <label asp-for="FirstName" class="control-label"></label>
-                        <input asp-for="FirstName" class="form-control" />
+                        <label asp-for="FirstName" class="control-label">First Name</label>
+                        <input asp-for="FirstName" placeholder="e.g First name" class="form-control" />
                         <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group py-0 my-0">
-                        <label asp-for="LastName"></label>
-                        <input asp-for="LastName" class="form-control" />
+                        <label asp-for="LastName">Last Name</label>
+                        <input asp-for="LastName" placeholder="e.g Last name" class="form-control" />
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>
                 </div>
@@ -39,35 +38,32 @@
             <div class="row py-0 my-0">
                 <div class="col-md-12">
                     <div class="form-group py-0 my-0">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" />
+                        <label asp-for="Email" class="control-label">Emaill Address</label>
+                        <input asp-for="Email" placeholder="e.g example@domain.com" class="form-control" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                 </div>
-                
+
             </div>
             <div class="row py-0 my-0">
                 <div class="col-md-6">
                     <div class="form-group py-0 my-0">
-                        <label asp-for="Password" class="control-label"></label>
+                        <label asp-for="Password" class="control-label">Password</label>
                         <input asp-for="Password" class="form-control" />
                         <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group py-0 my-0">
-                        <label asp-for="ConfirmPassword" class="control-label"></label>
+                        <label asp-for="ConfirmPassword" class="control-label" Cornfirm Password></label>
                         <input asp-for="ConfirmPassword" class="form-control" />
                         <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     </div>
                 </div>
             </div>
 
-
-           
-           
-            
             <div class="form-group">
+                <label class="control-label">Position</label>
                 <select class="form-control">
                     <option value="">Selct Role</option>
                     @foreach (var item in _roleManager.Roles.ToList().Where(x => x.Name != "Administrator" && x.Name != "Learner"))
@@ -77,12 +73,11 @@
 
                 </select>
             </div>
-        <div class="col-md-12 text-end">
-            <a asp-action="Index">Back to List</a>
-            <button type="submit" class="btn btn-primary float-right">Save</button>
-        </div>
+            <div class="col-md-12 text-end">
+                <a asp-action="Index">Back to List</a>
+                <button type="submit" class="btn btn-primary float-right">Save</button>
+            </div>
 
         </form>
     </div>
 </div>
-

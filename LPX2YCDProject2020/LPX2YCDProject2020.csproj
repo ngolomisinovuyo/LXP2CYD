@@ -19,6 +19,9 @@
     <Folder Include="Areas\Coordinator\Views\Centers\" />
     <Folder Include="Areas\Coordinator\Views\YearPlans\" />
     <Folder Include="Areas\Coordinator\dtos\" />
+    <Folder Include="Models\Centers\" />
+    <Folder Include="Models\Regions\" />
+    <Folder Include="Models\Requests\" />
   </ItemGroup>
 
   <ItemGroup>

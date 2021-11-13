@@ -22,6 +22,7 @@
     <Folder Include="Models\Centers\" />
     <Folder Include="Models\Regions\" />
     <Folder Include="Models\Requests\" />
+    <Folder Include="Models\YearPlans\" />
   </ItemGroup>
 
   <ItemGroup>

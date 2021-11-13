@@ -49,6 +49,8 @@ namespace LPX2YCDProject2020.Models.HomeModels
         [Display(Name = "Profile Photo")]
         public IFormFile ProfilePhoto { get; set; }
 
+
+
         public string ImageUrl { get; set; }
     }
 }

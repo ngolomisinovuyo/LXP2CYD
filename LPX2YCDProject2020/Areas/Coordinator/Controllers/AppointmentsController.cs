@@ -34,7 +34,7 @@ namespace LPX2YCDProject2020.Areas.Coordinator.Controllers
         [HttpGet]
         public IActionResult CreateAppointment()
         {
-            ViewBag.AppointmentTypes = new SelectList(GetAppointmentTypeAsync(), "Id", "Description");
+            //ViewBag.AppointmentTypes = new SelectList(GetAppointmentTypeAsync(), "Id", "Description");
             return View();
         }
 
